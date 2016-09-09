@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".QuestionActivity"
+    android:weightSum="1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="タイトル"
+                android:textSize="24sp"
+                android:id="@+id/textView5" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#dddddd"
+                android:ems="10"
+                android:id="@+id/title" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:textSize="24sp"
+                android:text="質問文" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:background="#dddddd"
+                android:id="@+id/question" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="回答形式"
+                android:textSize="24sp"
+                android:id="@+id/textView" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:id="@+id/radioGroup">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文章"
+                    android:id="@+id/texttype" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="チェックボックス"
+                    android:id="@+id/boxtype" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment"></LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="回答数"
+                android:textSize="24sp"
+                android:id="@+id/textview3" />
+
+            <EditText
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:inputType="number"
+                android:id="@+id/ans_num" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="回答期限"
+                android:textSize="24sp"
+                android:id="@+id/textView2" />
+
+            <EditText
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:layout_marginLeft="16dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:id="@+id/ans_lim" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="質問を投稿する"
+                android:id="@+id/post" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#ff0000"
+                android:id="@+id/alertText" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
