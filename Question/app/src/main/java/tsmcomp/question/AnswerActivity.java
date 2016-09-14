@@ -21,6 +21,8 @@ import com.nifty.cloud.mb.core.NCMBQuery;
 
 import java.util.List;
 
+import tsmcomp.question.ui.QuestionListFragment;
+
 
 public class AnswerActivity extends AppCompatActivity {
     NCMBObject question;
@@ -39,48 +41,6 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
 
-    private class QuestionListFragment extends ListFragment {
-        String title[];
-        List<NCMBObject> ncmbObjects;
-        ArrayAdapter<String> adapter;
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-
-            NCMBQuery<NCMBObject> query = new NCMBQuery<>("Questions");
-            query.whereEqualTo("answerPossible", true);
-            query.findInBackground(new FindCallback<NCMBObject>() {
-                @Override
-                public void done(List<NCMBObject> list, NCMBException e) {
-                    if (list.size() == 0) {
-                        title = new String[1];
-                        title[0] = "質問がありません";
-                    } else {
-                        ncmbObjects = list;
-                        title = new String[list.size()];
-                        for (int i = 0; i < title.length; i++) {
-                            title[i] = list.get(i).getString("title");
-                        }
-                    }
-                    adapter = new ArrayAdapter<String>(getActivity(), R.layout.list, title);
-                    setListAdapter(adapter);
-                }
-            });
-
-            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    question = ncmbObjects.get(position);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.answer_layout, new AnswerFormFragment(), "form")
-                            .commit();
-                }
-            });
-
-        }
-    }
 
     private class AnswerFormFragment extends Fragment{
         @Override
