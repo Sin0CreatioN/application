@@ -38,11 +38,10 @@ public class QuestionListFragment extends ListFragment {
         this.listener = l;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    /**
+     * Fragmentが作成されたときに呼ばれます
+     * データベースに接続し、問題を取得する
+     */
     @Override
     public void onStart(){
         super.onStart();
@@ -67,7 +66,6 @@ public class QuestionListFragment extends ListFragment {
         });
 
     }
-
 
 
     /**
