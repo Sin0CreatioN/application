@@ -1,4 +1,5 @@
-package tsmcomp.question;
+﻿package tsmcomp.question;
+
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,20 +16,36 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+
 import android.widget.TextView;
 
-import com.nifty.cloud.mb.core.DoneCallback;
-import com.nifty.cloud.mb.core.FindCallback;
-import com.nifty.cloud.mb.core.NCMB;
-import com.nifty.cloud.mb.core.NCMBException;
-import com.nifty.cloud.mb.core.NCMBObject;
-import com.nifty.cloud.mb.core.NCMBQuery;
 
-import java.util.List;
+import com.nifty.cloud.mb.core.NCMB;
+import com.nifty.cloud.mb.core.NCMBObject;
+
+
+import tsmcomp.question.ui.QuestionListFragment;
 
 
 public class AnswerActivity extends AppCompatActivity {
     NCMBObject question;
+
+    private final QuestionListFragment.OnClickTitleListener onClickTitleListener =
+            new QuestionListFragment.OnClickTitleListener() {
+                @Override
+                public void onClickTitle(NCMBObject obj) {
+                //	TODO:修正必要
+		//	質問一覧でタイトルがクリックされると
+		//	対応するNCMBObjectが帰ってくるので、フラグメントを置き換えるなりの処理が必要    
+		question = ncmbObjects.get(position);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.answer_layout, new AnswerFormFragment(), "form")
+                            .commit();
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,54 +55,11 @@ public class AnswerActivity extends AppCompatActivity {
         NCMB.initialize(this.getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.answer_layout, new QuestionListFragment(), "list")
+                .replace(R.id.answer_layout, new QuestionListFragment(onClickTitleListener), "list")
                 .commit();
     }
 
 
-    private class QuestionListFragment extends ListFragment {
-        String title[];
-        List<NCMBObject> ncmbObjects;
-        ArrayAdapter<String> adapter;
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-
-            NCMBQuery<NCMBObject> query = new NCMBQuery<>("Questions");
-            query.whereEqualTo("answerPossible", true);
-            query.addOrderByDescending("createDate");
-            query.findInBackground(new FindCallback<NCMBObject>() {
-                @Override
-                public void done(List<NCMBObject> list, NCMBException e) {
-                    if (list.size() == 0) {
-                        title = new String[1];
-                        title[0] = "質問がありません";
-                    } else {
-                        ncmbObjects = list;
-                        title = new String[list.size()];
-                        for (int i = 0; i < title.length; i++) {
-                            title[i] = list.get(i).getString("title");
-                        }
-                    }
-                    adapter = new ArrayAdapter<String>(getActivity(), R.layout.list, title);
-                    setListAdapter(adapter);
-                }
-            });
-
-            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    question = ncmbObjects.get(position);
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.answer_layout, new AnswerFormFragment(), "form")
-                            .commit();
-                }
-            });
-
-        }
-    }
 
     private class AnswerFormFragment extends Fragment{
         RadioGroup radio;
