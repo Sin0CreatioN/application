@@ -1,4 +1,4 @@
-package tsmcomp.question;
+﻿package tsmcomp.question;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,8 +37,8 @@ public class QuestionActivity extends AppCompatActivity {
     public final String UNSELECTED_ANSWERTYPE = "回答形式を選択してください";
     public final String EMPTY_OPTION = "入力されていない選択肢があります";
 
-    public final static String KEY1 = "bf2a6b7503b09f27b9c57da08827113fa7a910259ed2f9b9f913f6b339a4e167";
-    public final static String KEY2 = "3727a22c0104bd2b8c99cbd659a996cdd2ea6b5a354205bf7db3c06612cf3eb8";
+    public final static String KEY1 = "3957d6439d6d5a58b3df9892040594d5ed86fb8405493128c0075e38bc7d9402";
+    public final static String KEY2 = "77484e000c7c43ea60cef75a025d3c925ef841a13a28eac3b38e1a9fc4d90cde";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
