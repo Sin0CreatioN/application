@@ -77,7 +77,8 @@ public class QuestionListFragment extends ListFragment {
         if( object instanceof  NCMBObject ){
             listener.onClickTitle((NCMBObject)object);
         }
-
+        //  質問がない場合はStringオブジェクトがクリックされる
+        //  コールバックはしない
         //NCMBObject question = ncmbObjects.get(position);
         //listener.onClickTitle(question);
     }
