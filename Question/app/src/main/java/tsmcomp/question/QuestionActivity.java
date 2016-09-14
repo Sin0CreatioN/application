@@ -3,7 +3,6 @@ package tsmcomp.question;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,16 +22,13 @@ import com.nifty.cloud.mb.core.NCMB;
 import com.nifty.cloud.mb.core.NCMBException;
 import com.nifty.cloud.mb.core.NCMBObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class QuestionActivity extends AppCompatActivity {
     int ansType;
     LinearLayout layout;
     OptionalAnswerFragment fragment;
 
-    public final int ANSWER_TYPE_MULTILINE = 1;
-    public final int ANSWER_TYPE_OPTIONAL = 2;
+    public final static int ANSWER_TYPE_MULTILINE = 1;
+    public final static int ANSWER_TYPE_OPTIONAL = 2;
 
     public final String EMPTY_MAINTEXT = "質問文を入力してください";
     public final String EMPTY_NUMBER = "回答数を入力してください";
@@ -74,19 +69,26 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void onCheckedChangedRadio(int radioId) {
-        if (fragment == null) fragment = new OptionalAnswerFragment(this);
+        if (fragment == null) {
+            fragment = new OptionalAnswerFragment(this);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, fragment, "" + radioId)
+                    .commit();
+        }
 
         switch (radioId) {
             case R.id.boxtype:
                 ansType = ANSWER_TYPE_OPTIONAL;
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment, fragment, "" + radioId)
+                        .show(fragment)
                         .commit();
                 break;
             case R.id.texttype:
                 ansType = ANSWER_TYPE_MULTILINE;
                 getSupportFragmentManager().beginTransaction()
-                        .hide(fragment);
+                        .hide(fragment)
+                        .commit();
                 break;
         }
     }
@@ -98,7 +100,7 @@ public class QuestionActivity extends AppCompatActivity {
             String title = getTitleText();
             String mainText = getMainText();
             checkAnswerType();
-            String[] options;
+            String[] options = fragment.getOptions() ;
             if(ansType == ANSWER_TYPE_OPTIONAL) options = fragment.getOptions();
             int maxNumberOfAnswer = getNumberOfAnswer();
             int expirationOfAnswer = getExpirationOfAnswer();
@@ -111,7 +113,10 @@ public class QuestionActivity extends AppCompatActivity {
             question.put("answerPossible", true);
             question.put("answertype", ansType);
             if (ansType == ANSWER_TYPE_OPTIONAL) {
-                //question.put("options", fragment.getOptions());
+                question.put("optionsNum", options.length );
+                for(int i = 0; i < options.length; i++){
+                    question.put("option" + i, options[i]);
+                }
             }
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(QuestionActivity.this);
@@ -192,9 +197,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         public String[] getOptions() throws Exception{
             LinearLayout layout = (LinearLayout) this.getView();
-            String[] str = new String[layout.getChildCount()];
+            String[] str = new String[layout.getChildCount() - 1];
             for (int i = 0; i < str.length; i++) {
-                str[i] = layout.getChildAt(i).toString();
+                str[i] = layout.getChildAt(i + 1).toString();
                 if(str[i].isEmpty()) throw new Exception(EMPTY_OPTION);
             }
 
