@@ -6,16 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.nifty.cloud.mb.core.NCMBObject;
+
 import tsmcomp.question.MenuActivity;
 import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
+import tsmcomp.question.SerializedNCMBObject;
 
 /**
  * Created by dell_user on 2016/09/15.
@@ -30,16 +35,59 @@ public class AnswerFormFragment extends Fragment {
     public final String UNSELECTED_ANSWERTYPE = "回答形式を選択してください";
     public final String EMPTY_OPTION = "入力されていない選択肢があります";
 
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle){
+        View v = inflater.inflate(R.layout.fragment_answer,null);
+
+        //  questionを取り出す処理
+        SerializedNCMBObject object = (SerializedNCMBObject) getArguments().getSerializable("obj");
+        NCMBObject question = object.getNCMBObject();
+
+        //  questionに紐づいた解答候補を取り出す
+        
+
+
+        return v;
+    }
+
+
+
+    /**
+     * TODO:onActivityCreatedだとアプリを落とした時に呼ばれないんじゃない？
+     * @param savedInstanceState
+     */
+    /*
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
         setContentView(R.layout.fragment_answer_form);
+
+        //  NCMBObjectを取り出す処理
+
+        NCMBObject question = null;
+
+        //  取り出したNCMBObjectに対して処理を行う
+        switch(question.getInt("answertype")){
+            case QuestionActivity.ANSWER_TYPE_OPTIONAL:
+                break;
+            default:
+                break;
+        }
+
+
+
 
         TextView mainText = (TextView)findViewById(R.id.mainText);
         mainText.setText(question.getString("mainText"));
 
-        if(question.getInt("answertype") == QuestionActivity.ANSWER_TYPE_OPTIONAL){
+        if( == ){
             LinearLayout layout = (LinearLayout) findViewById(R.id.answerForm);
             layout.removeViewAt(1);
 
@@ -89,6 +137,6 @@ public class AnswerFormFragment extends Fragment {
                 dialog.create().show();
             }
         });
-    }
+    }*/
 
 }

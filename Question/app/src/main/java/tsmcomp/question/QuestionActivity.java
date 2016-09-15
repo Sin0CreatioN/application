@@ -1,4 +1,4 @@
-﻿package tsmcomp.question;
+package tsmcomp.question;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +27,10 @@ public class QuestionActivity extends AppCompatActivity {
     LinearLayout layout;
     OptionalAnswerFragment fragment;
 
+    //  TODO:この定数はQuestionAcitivtyに置くべきなの？
+    //  Javaの場合、定数はもっとも使うところに置くべき
+    //  依存関係を極力減らしたい
+    //  Define.javaというのを作るか、valuesリソースに置くのが理想
     public final static int ANSWER_TYPE_MULTILINE = 1;
     public final static int ANSWER_TYPE_OPTIONAL = 2;
 

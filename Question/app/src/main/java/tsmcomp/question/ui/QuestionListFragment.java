@@ -34,7 +34,12 @@ public class QuestionListFragment extends ListFragment {
     private static String TAG = "QuestionListFragment";
     OnClickTitleListener listener;
 
+    public QuestionListFragment(){
+        super();
+    }
+
     public QuestionListFragment(OnClickTitleListener l){
+        super();
         this.listener = l;
     }
 
@@ -47,6 +52,7 @@ public class QuestionListFragment extends ListFragment {
         super.onStart();
 
         //  ダウンロードを開始する
+        /*
         NCMBQuery<NCMBObject> query = new NCMBQuery<>("Questions");
         query.whereEqualTo("answerPossible", true);
         query.findInBackground(new FindCallback<NCMBObject>() {
@@ -55,6 +61,14 @@ public class QuestionListFragment extends ListFragment {
                 onFind(list, e);
             }
         });
+        */
+
+        //  ダウンロードの代わりにダミーデータを用意する
+        ArrayList<NCMBObject> list = new ArrayList<>();
+        list.add(createNCMBObject("NormalQuestion"));
+        list.add(createNCMBObject("OptionalQuestion"));
+        onFind(list,null);
+
         //  クリックしたときのリスナーをセットしておく
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,6 +147,14 @@ public class QuestionListFragment extends ListFragment {
         }
         return str;
     }
+
+
+    private static NCMBObject createNCMBObject(String title){
+        NCMBObject obj = new NCMBObject("question");
+        obj.put("title", title);
+        return obj;
+    }
+
 
 
     /**

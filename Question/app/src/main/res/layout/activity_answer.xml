@@ -5,4 +5,14 @@
     android:layout_height="match_parent"
     android:id="@+id/answer_layout">
 
+    <LinearLayout
+        android:id="@+id/answer_fragment"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dip">
+
+    </LinearLayout>
+
+
 </LinearLayout>

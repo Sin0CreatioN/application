@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * NCMBObjectを拡張し、Fragment間で受け渡しを可能にしたもの
+ * 参照コピーなので値はさわらないこと
  * Created by dell_user on 2016/09/15.
  */
 public class SerializedNCMBObject extends NCMBObject implements Serializable{
