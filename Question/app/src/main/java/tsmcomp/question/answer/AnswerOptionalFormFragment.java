@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nifty.cloud.mb.core.NCMBObject;
 
@@ -28,7 +31,8 @@ import tsmcomp.question.model.NCMBQuestion;
 public class AnswerOptionalFormFragment extends Fragment {
 
     private OnClickButtonListener listener;
-
+    private RadioGroup radioGroup;
+    private String selectedText;
 
     public AnswerOptionalFormFragment(OnClickButtonListener l) {
         super();
@@ -51,13 +55,20 @@ public class AnswerOptionalFormFragment extends Fragment {
         final ArrayList<NCMBOption> options = question.getOptions();
 
         //  viewに配置していく
+        radioGroup = new RadioGroup(getActivity());
         listView.setAdapter(new OptionArrayAdapter(getContext(),android.R.layout.simple_list_item_1,options));
         textView.setText(question.getTitle());
+
+        //  現在選択されているテキストをActivityに返す
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClickSubmitButton(question, "test");
+                if (selectedText == null) {
+                    Toast.makeText(getActivity(), "解答を選択してください", Toast.LENGTH_SHORT).show();
+                } else {
+                    listener.onClickSubmitButton(question, selectedText);
+                }
             }
         });
 
@@ -78,10 +89,22 @@ public class AnswerOptionalFormFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = (TextView)View.inflate(getContext(), android.R.layout.simple_list_item_1, null);
-            textView.setText(getItem(position).toString());
-            return textView;
+            RadioButton radioButton = new RadioButton(getActivity());
+            radioButton.setText(getItem(position).toString());
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(getActivity(), "Clickされた", Toast.LENGTH_SHORT).show();
+                    selectedText = ((RadioButton)v).getText().toString();
+                }
+            });
+            radioGroup.addView(radioButton);
+
+            //TextView textView = (TextView)View.inflate(getContext(), android.R.layout.simple_list_item_1, null);
+            //textView.setText();
+            //return textView;
             //return super.getView(position, convertView, parent);
+            return radioButton;
         }
 
     }

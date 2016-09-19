@@ -140,6 +140,24 @@ public class AnswerActivity extends AppCompatActivity {
      */
     private void onClickSubmitButtonInOptionalFormFragment(NCMBQuestion question, String answer){
         hideKeyboard();
+
+        final QuestionListFragment fragment = new QuestionListFragment(new QuestionListFragment.OnClickTitleListener() {
+            @Override
+            public void onClickTitle(NCMBObject obj) {
+                //  タイトルを押したときの処理
+                onClickTitleInQuestionListFragment(obj);
+            }
+        });
+
+        //  TOPに戻して
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment, "form")
+                .commit();
+
+        //  ログを出す
+        Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
+
+        //  解答送信処理
     }
 
 

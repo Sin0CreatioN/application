@@ -24,7 +24,9 @@ public class NCMBQuestion implements Serializable{
      * @return
      */
     public boolean hasOption(){
-        return false;
+        //  一時的な処理なので変更してくれ
+        if(getTitle().contains("Normal")) return false;
+        return true;
     }
 
     /**
@@ -33,7 +35,13 @@ public class NCMBQuestion implements Serializable{
      */
     @Nullable
     public ArrayList<NCMBOption> getOptions(){
-       return null;
+       //   一時的な処理なので変更してくれ
+        ArrayList<NCMBOption> options = new ArrayList<>();
+        options.add(new NCMBOption("Option1"));
+        options.add(new NCMBOption("Option2"));
+        options.add(new NCMBOption("Option3"));
+        options.add(new NCMBOption("Option4"));
+        return options;
     }
 
     /**

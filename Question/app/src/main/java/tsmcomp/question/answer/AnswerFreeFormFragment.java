@@ -45,7 +45,6 @@ public class AnswerFreeFormFragment extends Fragment{
 
         //  問題を取得する
         final NCMBQuestion question = (NCMBQuestion) getArguments().getSerializable("obj");
-
         textView.setText(question.getTitle());
 
         button.setOnClickListener(new View.OnClickListener() {
