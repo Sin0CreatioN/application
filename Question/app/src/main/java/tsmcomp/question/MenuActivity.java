@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import tsmcomp.question.answer.AnswerActivity;
+
 public class MenuActivity extends AppCompatActivity {
 
     @Override

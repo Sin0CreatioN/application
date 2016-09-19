@@ -1,24 +1,15 @@
 package tsmcomp.question.ui;
 
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.nifty.cloud.mb.core.NCMBObject;
 
-import tsmcomp.question.MenuActivity;
-import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
 import tsmcomp.question.SerializedNCMBObject;
 
@@ -42,14 +33,14 @@ public class AnswerFormFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle){
-        View v = inflater.inflate(R.layout.fragment_answer,null);
+        View v = inflater.inflate(R.layout.fragment_answer_free_form,null);
 
         //  questionを取り出す処理
         SerializedNCMBObject object = (SerializedNCMBObject) getArguments().getSerializable("obj");
         NCMBObject question = object.getNCMBObject();
 
         //  questionに紐づいた解答候補を取り出す
-        
+
 
 
         return v;

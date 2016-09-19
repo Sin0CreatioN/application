@@ -6,7 +6,7 @@
     android:id="@+id/answer_layout">
 
     <LinearLayout
-        android:id="@+id/answer_fragment"
+        android:id="@+id/container"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_weight="1"

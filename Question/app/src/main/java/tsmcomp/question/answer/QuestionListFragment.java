@@ -1,4 +1,4 @@
-package tsmcomp.question.ui;
+package tsmcomp.question.answer;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
+import tsmcomp.question.model.NCMBQuestion;
 
 /**
  * 質問一覧を表示するためのフラグメント
@@ -88,8 +89,8 @@ public class QuestionListFragment extends ListFragment {
      */
     private void onClickTitle(Object object){
         //  NCMBオブジェクトがクリックされたときのみコールバックする
-        if( object instanceof  NCMBObject ){
-            listener.onClickTitle((NCMBObject)object);
+        if( object instanceof  NCMBObject){
+            listener.onClickTitle((NCMBObject) object);
         }
         //  質問がない場合はStringオブジェクトがクリックされる
         //  コールバックはしない
@@ -154,6 +155,7 @@ public class QuestionListFragment extends ListFragment {
         obj.put("title", title);
         return obj;
     }
+
 
 
 
