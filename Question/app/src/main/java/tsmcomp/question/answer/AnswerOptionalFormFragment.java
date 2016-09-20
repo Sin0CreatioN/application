@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -89,6 +90,26 @@ public class AnswerOptionalFormFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            //  RadioButtonをCheckBoxに変更
+            View v = View.inflate(getContext(), R.layout.row_answer_optional_form, null);
+            final CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkBox);
+            TextView textView = (TextView) v.findViewById(R.id.textView);
+
+            textView.setText(getItem(position).toString());
+            radioGroup.addView(checkBox);
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedText = ((CheckBox)v).getText().toString();
+                }
+            });
+
+            return v;
+
+
+            /*
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(getItem(position).toString());
             radioButton.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +126,7 @@ public class AnswerOptionalFormFragment extends Fragment {
             //return textView;
             //return super.getView(position, convertView, parent);
             return radioButton;
+            */
         }
 
     }
