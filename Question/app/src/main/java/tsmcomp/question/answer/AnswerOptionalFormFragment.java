@@ -61,7 +61,6 @@ public class AnswerOptionalFormFragment extends Fragment {
         textView.setText(question.getTitle());
 
         //  現在選択されているテキストをActivityに返す
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,17 +91,17 @@ public class AnswerOptionalFormFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             //  RadioButtonをCheckBoxに変更
             View v = View.inflate(getContext(), R.layout.row_answer_optional_form, null);
-            final CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkBox);
+            final CheckBox checkBox  = (CheckBox) v.findViewById(R.id.checkBox);
             TextView textView = (TextView) v.findViewById(R.id.textView);
 
             textView.setText(getItem(position).toString());
-            radioGroup.addView(checkBox);
+            //radioGroup.addView(radio);
 
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedText = ((CheckBox)v).getText().toString();
+                    selectedText = checkBox.getText().toString();
                 }
             });
 
