@@ -34,7 +34,6 @@ public class NCMBQuestion implements Serializable{
 
         options = new ArrayList<NCMBOption>();
 
-
     }
 
     /**
