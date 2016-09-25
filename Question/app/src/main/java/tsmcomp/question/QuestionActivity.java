@@ -22,6 +22,8 @@ import com.nifty.cloud.mb.core.NCMB;
 import com.nifty.cloud.mb.core.NCMBException;
 import com.nifty.cloud.mb.core.NCMBObject;
 
+import tsmcomp.question.ui.activity.MenuActivity;
+
 public class QuestionActivity extends AppCompatActivity {
     int ansType;
     LinearLayout layout;

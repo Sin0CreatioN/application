@@ -14,4 +14,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- for menu -->
+    <string name="menu_first_item">今日のアンケ</string>
+    <string name="menu_second_item">アンケを探す</string>
+    <string name="menu_third_item">アンケを書く</string>
+    <string name="menu_fourth_item">設定</string>
+
+    <!-- for creating -->
+    <string name="add_option"><u>選択肢を追加</u></string>
+
 </resources>

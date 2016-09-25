@@ -16,16 +16,16 @@ import com.nifty.cloud.mb.core.NCMBObject;
 
 import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
-import tsmcomp.question.SerializedNCMBObject;
 import tsmcomp.question.model.NCMBQuestion;
-import tsmcomp.question.ui.AnswerFormFragment;
+import tsmcomp.question.ui.fragment.DetailFreelyFragment;
+import tsmcomp.question.ui.fragment.DetailOptionallyFragment;
 
 /**
  * 回答用アクティビティー
  * このアクティビティーは回答すべてを扱います
  *
- * @see AnswerFreeFormFragment 自由回答形式のフラグメント
- * @see AnswerOptionalFormFragment 選択回答形式のフラグメント
+ * @see DetailFreelyFragment 自由回答形式のフラグメント
+ * @see DetailOptionallyFragment 選択回答形式のフラグメント
  * @see QuestionListFragment 質問一覧のフラグメント
  */
 public class AnswerActivity extends AppCompatActivity {
@@ -33,7 +33,7 @@ public class AnswerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer);
+        setContentView(R.layout.activity_detail);
 
         NCMB.initialize(this.getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
@@ -74,14 +74,14 @@ public class AnswerActivity extends AppCompatActivity {
          切り替えるフラグメントを指定する
         */
         if( !ncmb.hasOption() ){
-            fragment = new AnswerFreeFormFragment(new AnswerFreeFormFragment.OnClickButtonListener() {
+            fragment = new DetailFreelyFragment(new DetailFreelyFragment.OnClickButtonListener() {
                 @Override
                 public void onClickSubmitButton(NCMBQuestion question, String answer) {
                     onClickSubmitButtonInFreeFormFragment(question, answer);
                 }
             });
         }else{
-            fragment = new AnswerOptionalFormFragment(new AnswerOptionalFormFragment.OnClickButtonListener() {
+            fragment = new DetailOptionallyFragment(new DetailOptionallyFragment.OnClickButtonListener() {
                 @Override
                 public void onClickSubmitButton(NCMBQuestion question, String answer) {
                     onClickSubmitButtonInOptionalFormFragment(question, answer);
@@ -130,6 +130,7 @@ public class AnswerActivity extends AppCompatActivity {
         Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
 
         //  解答送信処理
+
 
     }
 

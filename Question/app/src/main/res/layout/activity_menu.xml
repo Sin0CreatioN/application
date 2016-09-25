@@ -1,17 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="質問する"
-        android:id="@+id/bt_question" />
+        android:layout_height="match_parent"
+        app:columnCount="2"
+        app:rowCount="2" >
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="回答する"
-        android:id="@+id/bt_answer"/>
+        <com.balysv.materialripple.MaterialRippleLayout
+            app:layout_columnWeight="1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            app:mrl_rippleBackground="@color/menuFirst">
+
+            <LinearLayout
+                android:id="@+id/menu_first_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:onClick="onClickView">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/announcement" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/menu_first_item"
+                    android:textSize="24sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center_horizontal" />
+
+            </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple"
+            app:layout_columnWeight="1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            app:mrl_rippleBackground="@color/menuSecond">
+
+        <LinearLayout
+            android:id="@+id/menu_second_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:onClick="onClickView">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_second_item"
+                android:textSize="24sp"
+                android:textColor="#ffffff"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple2"
+            app:layout_columnWeight="1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            app:mrl_rippleBackground="@color/menuThird" >
+
+        <LinearLayout
+            android:id="@+id/menu_third_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:onClick="onClickView">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_third_item"
+                android:textSize="24sp"
+                android:textColor="#ffffff"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple3"
+            app:layout_columnWeight="1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            app:mrl_rippleBackground="@color/menuFourth">
+
+            <LinearLayout
+                android:id="@+id/menu_fourth_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:onClick="onClickView">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/settings" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/menu_fourth_item"
+                    android:textSize="24sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center_horizontal" />
+
+            </LinearLayout>
+        </com.balysv.materialripple.MaterialRippleLayout>
+
+
+
+    </android.support.v7.widget.GridLayout>
+
+
 </LinearLayout>

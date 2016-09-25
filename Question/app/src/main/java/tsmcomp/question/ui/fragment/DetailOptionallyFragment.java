@@ -1,9 +1,8 @@
-package tsmcomp.question.answer;
+package tsmcomp.question.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,42 +10,38 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nifty.cloud.mb.core.NCMBObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
-import tsmcomp.question.model.NCMBAnswer;
 import tsmcomp.question.model.NCMBOption;
 import tsmcomp.question.model.NCMBQuestion;
 
 /**
  * Created by test on 2016/09/19.
  */
-public class AnswerOptionalFormFragment extends Fragment {
+public class DetailOptionallyFragment extends Fragment {
 
     private OnClickButtonListener listener;
     private RadioGroup radioGroup;
     private String selectedText;
 
-    public AnswerOptionalFormFragment(OnClickButtonListener l) {
+    public DetailOptionallyFragment(OnClickButtonListener l) {
         super();
         this.listener = l;
     }
 
-    public AnswerOptionalFormFragment() {
+    public DetailOptionallyFragment() {
         super();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View v = inflater.inflate(R.layout.fragment_answer_optional_form, null);
+        View v = inflater.inflate(R.layout.fragment_detail_optionally_form, null);
         ListView listView = (ListView) v.findViewById(R.id.listView);
         Button button = (Button) v.findViewById(R.id.button);
         TextView textView = (TextView) v.findViewById(R.id.text);
