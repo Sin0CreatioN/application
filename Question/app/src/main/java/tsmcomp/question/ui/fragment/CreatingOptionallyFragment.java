@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
+import tsmcomp.question.common.MaterialCardAvatarWithTextViewHolder;
+import tsmcomp.question.common.MaterialCardDenseAvatarWithTextAndIconViewHolder;
+import tsmcomp.question.common.MaterialCardRadioWithTextAndIconViewHolder;
+import tsmcomp.question.common.MaterialCardSingleRadioWithTextAndIconViewHolder;
+import tsmcomp.question.model.NCMBQuestion;
 import tsmcomp.question.ui.activity.CreatingActivity;
 
 /**
@@ -27,28 +35,24 @@ import tsmcomp.question.ui.activity.CreatingActivity;
  */
 public class CreatingOptionallyFragment extends Fragment {
 
+    ArrayList<String> options;
     MyAdapter myAdapter;
-    ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = View.inflate(getContext(), R.layout.fragment_creating_optionally_form, null);
-        listView = (ListView) view.findViewById(R.id.listView);
 
-        ArrayList<String> string = new ArrayList<>();
-        string.add("efd");
-        string.add("bcd");
+        options = new ArrayList<String>();
+        options.add("abc");
+        options.add("ddd");
+        options.add("ddd");
 
-        myAdapter = new MyAdapter(getContext(), android.R.layout.simple_list_item_1, string);
-        listView.setAdapter(myAdapter);
 
-        final TextView addButton = (TextView) view.findViewById(R.id.add);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickAddButton();
-            }
-        });
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        myAdapter = new MyAdapter();
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         //  MEXTボタンの処理
         Button b = (Button) view.findViewById(R.id.button);
@@ -58,8 +62,6 @@ public class CreatingOptionallyFragment extends Fragment {
                 ((CreatingActivity)getActivity()).goToTheNextPage();
             }
         });
-
-        //  TODO:NEXTに変更
 
 
         return view;
@@ -71,31 +73,78 @@ public class CreatingOptionallyFragment extends Fragment {
     }
 
 
+
     /**
-     * 選択肢を追加ボタンが押されたときに実行される
-     * 選択肢を追加する
+     * ListViewのかわりにRecyclerViewというものを使う
+     *
+     * @see MaterialCardAvatarWithTextViewHolder
      */
-    private void onClickAddButton(){
-        myAdapter.add("ssss");
-        myAdapter.notifyDataSetChanged();
-        listView.invalidateViews();
-        Log.d("TEST","add button");
-    }
+    private class MyAdapter extends RecyclerView.Adapter<MaterialCardSingleRadioWithTextAndIconViewHolder> {
 
+        private ArrayList<Object> mData;
 
-
-    private class MyAdapter extends ArrayAdapter<String> {
-
-        public MyAdapter(Context context, int resource,  List objects) {
-            super(context, resource, objects);
+        public MyAdapter() {
+            super();
+            mData = new ArrayList<>();
+            mData.add("");
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = View.inflate(getContext(), R.layout.row_content_creating_optionally_form, null);
-            TextView tv = (TextView) convertView.findViewById(R.id.textView);
-            tv.setText(getItem(position));
-            return convertView;
+        public MaterialCardSingleRadioWithTextAndIconViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new MaterialCardSingleRadioWithTextAndIconViewHolder(LayoutInflater.from(getContext())
+                    .inflate(R.layout.card_material_single_radio_with_text_and_icon, parent, true));
+        }
+
+        @Override
+        public void onBindViewHolder(MaterialCardSingleRadioWithTextAndIconViewHolder holder, int position) {
+            //  ここで値をセットする
+            //  とりあえずランダムでセット
+            if(position==mData.size()){
+                //  最後にaddボタンを追加
+                holder.mPrimaryTextView.setText(Html.fromHtml("<u>選択肢を追加する</u>"));
+                holder.mRadioButton.setEnabled(false);
+                holder.mRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addOption();
+                    }
+                });
+            }else{
+                String text = "選択肢";
+                holder.mPrimaryTextView.setText(text);
+                holder.mIconImageView.setImageResource(android.R.drawable.ic_menu_delete);
+                holder.mIconImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //removeOption(position);
+                    }
+                });
+            }
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return mData.size()+1;
+        }
+
+
+        /**
+         * 選択肢を追加する
+         */
+        private void addOption(){
+            mData.add("any");
+            notifyDataSetChanged();
+        }
+
+        /**
+         * 選択肢を削除する
+         */
+        private void removeOption(int index){
+            mData.remove(index);
+            notifyDataSetChanged();
+
         }
 
 

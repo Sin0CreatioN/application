@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="88dp">
+
+    <RelativeLayout
+        android:id="@+id/wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/avatar"
@@ -20,7 +26,6 @@
         android:layout_marginLeft="72dp"
         android:layout_marginRight="16dp"/>
 
-
     <TextView
         android:id="@+id/secondaryText"
         android:layout_width="match_parent"
@@ -32,5 +37,5 @@
         android:layout_below="@id/primaryText"
         android:layout_marginBottom="8dp" />
 
-
-</RelativeLayout>
+    </RelativeLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

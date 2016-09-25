@@ -7,28 +7,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.nifty.cloud.mb.core.NCMB;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
 import tsmcomp.question.model.NCMBAnswer;
-import tsmcomp.question.model.User;
 
 /**
- * アンケート結果を表示する画面
+ * アンケート結果の詳細を表示する画面
+ * 通知画面から遷移する可能性があるためActivityに昇格
  */
-public class ResultActivity extends AppCompatActivity{
+public class ResultDetailActivity extends AppCompatActivity{
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_result);
+        setContentView(R.layout.activity_result_detail);
 
         ListView listview = (ListView) findViewById(R.id.listView);
 
