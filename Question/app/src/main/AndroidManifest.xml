@@ -28,6 +28,9 @@
         <activity android:name=".ui.activity.DetailActivity" />
         <activity android:name=".ui.activity.CreatingActivity" />
         <activity
+            android:name=".ui.activity.ResultActivity"
+            android:label="アンケの結果" />
+        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"></activity>
     </application>

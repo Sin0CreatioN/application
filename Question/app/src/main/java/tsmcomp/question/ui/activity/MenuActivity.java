@@ -43,8 +43,9 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.menu_fourth_item:
-
-
+                //  結果画面
+                intent = new Intent(this, ResultActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return;

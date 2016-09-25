@@ -17,7 +17,7 @@ import tsmcomp.question.ui.fragment.DetailFreelyFragment;
 import tsmcomp.question.ui.fragment.DetailOptionallyFragment;
 
 /**
- * アンケート詳細画面＆回答可能
+ * アンケート詳細画面＆回答画面
  * 今日のアンケまたはアンケを探すから遷移
  */
 public class DetailActivity extends AppCompatActivity{

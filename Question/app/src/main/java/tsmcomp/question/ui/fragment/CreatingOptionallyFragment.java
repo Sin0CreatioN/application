@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
+import tsmcomp.question.ui.activity.CreatingActivity;
 
 /**
  * 問題作成時
@@ -48,6 +49,18 @@ public class CreatingOptionallyFragment extends Fragment {
                 onClickAddButton();
             }
         });
+
+        //  MEXTボタンの処理
+        Button b = (Button) view.findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CreatingActivity)getActivity()).goToTheNextPage();
+            }
+        });
+
+        //  TODO:NEXTに変更
+
 
         return view;
     }

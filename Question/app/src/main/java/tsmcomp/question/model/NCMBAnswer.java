@@ -1,9 +1,16 @@
 package tsmcomp.question.model;
 
 /**
- * Created by test on 2016/09/19.
+ * 回答
  */
 public class NCMBAnswer {
 
+    public String getUserName(){
+        return "てすとゆーざ1";
+    }
+
+    public String getAnswerText(){
+        return "鬼ごっことかどうでしょう？";
+    }
 
 }

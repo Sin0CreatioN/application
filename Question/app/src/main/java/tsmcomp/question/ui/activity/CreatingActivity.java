@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import tsmcomp.question.R;
+import tsmcomp.question.ui.fragment.CreatingConfirmFragment;
 import tsmcomp.question.ui.fragment.CreatingOptionallyFragment;
 import tsmcomp.question.ui.fragment.CreatingTitleFragment;
 
@@ -46,6 +47,8 @@ public class CreatingActivity extends AppCompatActivity{
     }
 
     public void goToTheNextPage(){
+        //  TODO:ページ数カンスト処理
+
         mCurrentPageNumber++;
         mViewPager.setCurrentItem(mCurrentPageNumber);
         setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/3)");
@@ -65,13 +68,15 @@ public class CreatingActivity extends AppCompatActivity{
                     return new CreatingTitleFragment();
                 case 1:
                     return new CreatingOptionallyFragment();
+                case 2:
+                    return new CreatingConfirmFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
 
