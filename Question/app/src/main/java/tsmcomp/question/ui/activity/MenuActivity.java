@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.view.View;
 
 import com.nifty.cloud.mb.core.NCMBObject;
 
-import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
-import tsmcomp.question.answer.AnswerActivity;
 import tsmcomp.question.model.NCMBQuestion;
 
 public class MenuActivity extends AppCompatActivity {
@@ -48,7 +45,7 @@ public class MenuActivity extends AppCompatActivity {
                 break;
             case R.id.menu_fourth_item:
                 //  結果画面
-                intent = new Intent(this, ResultActivity.class);
+                intent = new Intent(this, ResultListActivity.class);
                 startActivity(intent);
                 break;
             default:

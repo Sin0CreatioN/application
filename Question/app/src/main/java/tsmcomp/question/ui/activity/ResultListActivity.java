@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-
-import com.nifty.cloud.mb.core.NCMB;
 
 import java.util.ArrayList;
 
@@ -19,24 +15,26 @@ import tsmcomp.question.common.MaterialCardAvatarWithTextViewHolder;
 import tsmcomp.question.model.NCMBQuestion;
 
 /**
- * アンケを探す画面
+ * 結果一覧を見るためのアクティビティー
  */
-public class FindingActivity extends AppCompatActivity{
+public class ResultListActivity extends AppCompatActivity {
 
+    //  自分で投稿したアンケ一覧
     ArrayList<NCMBQuestion> questions;
 
     @Override
-    public void onCreate(Bundle bundle){
+    public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_finding);
+        setContentView(R.layout.activity_result_list);
 
-
-        //  アンケート一覧を取得
+        //  本来はアンケート一覧を取得
+        //  現在は作ってます
         questions = new ArrayList<>();
         questions.add(new NCMBQuestion("好きな食べ物は？"));
         questions.add(new NCMBQuestion("好きなお菓子は？"));
         questions.add(new NCMBQuestion("好きな芸能人は？"));
         questions.add(new NCMBQuestion("好きな〇×は？"));
+
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         MyAdapter myAdapter = new MyAdapter();
@@ -44,23 +42,23 @@ public class FindingActivity extends AppCompatActivity{
         recyclerView.setAdapter(myAdapter);
 
 
-
     }
 
 
     /**
      * ListViewのかわりにRecyclerViewというものを使う
+     *
      * @see MaterialCardAvatarWithTextViewHolder
      */
-    private class MyAdapter extends RecyclerView.Adapter<MaterialCardAvatarWithTextViewHolder>{
+    private class MyAdapter extends RecyclerView.Adapter<MaterialCardAvatarWithTextViewHolder> {
 
-        public MyAdapter(){
+        public MyAdapter() {
             super();
         }
 
         @Override
         public MaterialCardAvatarWithTextViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MaterialCardAvatarWithTextViewHolder(LayoutInflater.from(FindingActivity.this)
+            return new MaterialCardAvatarWithTextViewHolder(LayoutInflater.from(ResultListActivity.this)
                     .inflate(R.layout.card_material_avatar_with_text, parent, false));
         }
 
@@ -70,13 +68,13 @@ public class FindingActivity extends AppCompatActivity{
             //  とりあえずランダムでセット
             NCMBQuestion question = questions.get(position);
             holder.mPrimaryTextView.setText(question.getTitle());
-            if( position%2==0 ){
-                holder.mSecondaryTextView.setText("2016/09/09 12:00まで回答できます");
-                holder.mAvatarImageView.setImageResource(R.drawable.account_circle);
-            }else{
-                holder.mSecondaryTextView.setText("2016/09/09 12:00に回答しました");
-                holder.mAvatarImageView.setBackgroundColor(Color.GREEN);
-                holder.mAvatarImageView.setImageResource(R.drawable.check_circle);
+            if (position < 2) {
+                holder.mSecondaryTextView.setText("2件の回答がありました");
+                holder.mAvatarImageView.setImageResource(R.drawable.play_circle_filled_white_192x192);
+            } else {
+                holder.mSecondaryTextView.setText("3件の回答がありました");
+                //holder.mAvatarImageView.setBackgroundColor();
+                holder.mAvatarImageView.setImageResource(R.drawable.pause_circle_fill_white_192x192);
             }
         }
 
@@ -86,7 +84,5 @@ public class FindingActivity extends AppCompatActivity{
         }
 
 
-
     }
-
 }

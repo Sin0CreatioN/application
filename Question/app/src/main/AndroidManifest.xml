@@ -31,7 +31,7 @@
             android:name=".ui.activity.FindingActivity"
             android:label="@string/menu_second_item" />
         <activity
-            android:name=".ui.activity.ResultActivity"
+            android:name=".ui.activity.ResultListActivity"
             android:label="@string/menu_fourth_item" />
         <activity
             android:name=".LoginActivity"
