@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <android.support.v7.widget.GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:columnCount="2"
-        app:rowCount="2" >
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:columnCount="2"
+            app:rowCount="2" >
 
         <com.balysv.materialripple.MaterialRippleLayout
             app:layout_columnWeight="1"
@@ -142,12 +142,13 @@
 
     </LinearLayout>
 
+
     <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#66000000"
         ></RelativeLayout>
-    -->
+       -->
 
 </FrameLayout>

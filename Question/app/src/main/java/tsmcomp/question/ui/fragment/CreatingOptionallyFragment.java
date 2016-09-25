@@ -50,8 +50,9 @@ public class CreatingOptionallyFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         myAdapter = new MyAdapter();
-        recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(myAdapter);
+
 
 
         //  MEXTボタンの処理
@@ -87,16 +88,18 @@ public class CreatingOptionallyFragment extends Fragment {
             super();
             mData = new ArrayList<>();
             mData.add("");
+            mData.add("");
         }
 
         @Override
         public MaterialCardSingleRadioWithTextAndIconViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new MaterialCardSingleRadioWithTextAndIconViewHolder(LayoutInflater.from(getContext())
-                    .inflate(R.layout.card_material_single_radio_with_text_and_icon, parent, true));
+                    .inflate(R.layout.card_material_single_radio_with_text_and_icon, parent, false));
         }
 
         @Override
         public void onBindViewHolder(MaterialCardSingleRadioWithTextAndIconViewHolder holder, int position) {
+
             //  ここで値をセットする
             //  とりあえずランダムでセット
             if(position==mData.size()){
@@ -113,14 +116,8 @@ public class CreatingOptionallyFragment extends Fragment {
                 String text = "選択肢";
                 holder.mPrimaryTextView.setText(text);
                 holder.mIconImageView.setImageResource(android.R.drawable.ic_menu_delete);
-                holder.mIconImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //removeOption(position);
-                    }
-                });
             }
-
+            
 
         }
 
