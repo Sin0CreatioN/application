@@ -40,6 +40,7 @@ public class FindingActivity extends AppCompatActivity{
 
 
 
+
         //  アンケート一覧を取得
         questions = new ArrayList<>();
 
@@ -52,6 +53,10 @@ public class FindingActivity extends AppCompatActivity{
                 for(int i = 0; i < list.size(); i++){
                     questions.add(new NCMBQuestion((NCMBObject) list.get(i)));
                 }
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                final MyAdapter myAdapter = new MyAdapter();
+                recyclerView.setLayoutManager(new LinearLayoutManager(FindingActivity.this));
+                recyclerView.setAdapter(myAdapter);
             }
         });
 
@@ -62,10 +67,7 @@ public class FindingActivity extends AppCompatActivity{
         questions.add(new NCMBQuestion("好きな〇×は？"));
 */
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        MyAdapter myAdapter = new MyAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(myAdapter);
+
 
 
 

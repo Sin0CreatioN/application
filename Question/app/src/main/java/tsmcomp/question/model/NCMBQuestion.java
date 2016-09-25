@@ -29,7 +29,7 @@ public class NCMBQuestion implements Serializable{
      * @param obj
      */
     public NCMBQuestion(NCMBObject obj){
-        id = obj.getInt("objectId ");
+        id = obj.getInt("objectId");
         title = obj.getString("title");
 
         options = new ArrayList<NCMBOption>();

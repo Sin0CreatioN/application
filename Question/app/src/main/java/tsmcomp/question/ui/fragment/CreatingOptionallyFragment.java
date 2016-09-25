@@ -117,7 +117,7 @@ public class CreatingOptionallyFragment extends Fragment {
                 holder.mPrimaryTextView.setText(text);
                 holder.mIconImageView.setImageResource(android.R.drawable.ic_menu_delete);
             }
-            
+
 
         }
 
