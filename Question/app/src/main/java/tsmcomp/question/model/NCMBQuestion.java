@@ -37,6 +37,16 @@ public class NCMBQuestion implements Serializable{
 
     }
 
+    /**
+     * これは非推奨
+     * @deprecated
+     */
+    public NCMBQuestion(String title){
+        this.title = title;
+    }
+
+
+
 
     /**
      * 選択回答であるか確認する
@@ -75,4 +85,8 @@ public class NCMBQuestion implements Serializable{
     public String toString(){
         return "";
     }
+
+
+
+
 }
