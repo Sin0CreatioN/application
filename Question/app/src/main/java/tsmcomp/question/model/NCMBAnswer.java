@@ -10,7 +10,7 @@ public class NCMBAnswer {
     }
 
     public String getAnswerText(){
-        return "鬼ごっことかどうでしょう？";
+        return "鬼ごっことかどうでしょう？鬼ごっことかどうでしょう？";
     }
 
 }

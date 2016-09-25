@@ -22,8 +22,12 @@ import tsmcomp.question.ui.fragment.CreatingTitleFragment;
  */
 public class CreatingActivity extends AppCompatActivity{
 
+    private static int MAX_PAGE = 3;
+
     ViewPager mViewPager;
     int mCurrentPageNumber;
+
+
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -33,25 +37,22 @@ public class CreatingActivity extends AppCompatActivity{
         mViewPager.setAdapter(new MyFragmentAdapter(getSupportFragmentManager()));
 
         mCurrentPageNumber = 0;
-        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/3)");
-
-        /*
-        setTitle("アンケを書く(1/3)");
-        Fragment fragment = new CreatingOptionallyFragment();
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
-                */
+        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
 
     }
 
     public void goToTheNextPage(){
-        //  TODO:ページ数カンスト処理
-
+        if( MAX_PAGE-1 <= mCurrentPageNumber ){
+            //  現在のページが最大数に到達したら
+            //  TODO:アンケートを投稿する処理を追加
+            //  投稿してから結果を返す
+            setResult(RESULT_OK);
+            finish();
+            return;
+        }
         mCurrentPageNumber++;
         mViewPager.setCurrentItem(mCurrentPageNumber);
-        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/3)");
+        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
     }
 
 
@@ -76,7 +77,7 @@ public class CreatingActivity extends AppCompatActivity{
 
         @Override
         public int getCount() {
-            return 3;
+            return MAX_PAGE;
         }
 
 

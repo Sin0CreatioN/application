@@ -32,6 +32,8 @@ public class ResultActivity extends AppCompatActivity{
 
         ListView listview = (ListView) findViewById(R.id.listView);
 
+        //  TODO:データベースからデータを引っ張るのと
+        //  TODO:リアルタイムで解答があった場合更新する
         //  該当の回答を取得
         //  回答リストを作成
         ArrayList<NCMBAnswer> answers = new ArrayList<>();

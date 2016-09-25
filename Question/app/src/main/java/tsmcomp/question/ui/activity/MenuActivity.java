@@ -1,6 +1,7 @@
 package tsmcomp.question.ui.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -14,6 +15,9 @@ import tsmcomp.question.answer.AnswerActivity;
 import tsmcomp.question.model.NCMBQuestion;
 
 public class MenuActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_CREATING_ACTIVITY = 1;
+    private static final int REQUEST_CODE_TODAY_QUESTION = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.menu_third_item:
                 //  アンケを投稿する
                 intent = new Intent(this, CreatingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CREATING_ACTIVITY);
                 break;
             case R.id.menu_fourth_item:
                 //  結果画面
@@ -54,9 +58,48 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * ほかの画面へ遷移したとき結果を返してもらう
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case REQUEST_CODE_CREATING_ACTIVITY:
+                if( resultCode == RESULT_OK ){
+                    //  投稿に成功した場合
+                    openSuccessDialog("投稿に成功しました");
+                }
+                break;
+
+
+        }
+    }
+
+
+    /**
+     * 成功した場合のダイアログを表示する
+     */
+    private void openSuccessDialog(String title){
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
+
+
+
+
     private static NCMBObject createNCMBObject(String title){
         NCMBObject obj = new NCMBObject("question");
         obj.put("title", title);
         return obj;
     }
+
+
+
 }
