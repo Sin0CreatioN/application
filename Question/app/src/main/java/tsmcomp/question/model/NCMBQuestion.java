@@ -29,7 +29,7 @@ public class NCMBQuestion implements Serializable{
      * @param obj
      */
     public NCMBQuestion(NCMBObject obj){
-        id = obj.getInt("id");
+        id = obj.getInt("objectId ");
         title = obj.getString("title");
 
         options = new ArrayList<NCMBOption>();
@@ -54,8 +54,12 @@ public class NCMBQuestion implements Serializable{
      */
     public boolean hasOption(){
         //  一時的な処理なので変更してくれ
+        /*
         if(title.contains("Normal")) return false;
         return true;
+        */
+
+        return options.size() != 0;
     }
 
     /**

@@ -10,10 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nifty.cloud.mb.core.FindCallback;
 import com.nifty.cloud.mb.core.NCMB;
+import com.nifty.cloud.mb.core.NCMBException;
+import com.nifty.cloud.mb.core.NCMBObject;
+import com.nifty.cloud.mb.core.NCMBQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
 import tsmcomp.question.common.MaterialCardAvatarWithTextViewHolder;
 import tsmcomp.question.model.NCMBQuestion;
@@ -30,13 +36,31 @@ public class FindingActivity extends AppCompatActivity{
         super.onCreate(bundle);
         setContentView(R.layout.activity_finding);
 
+        NCMB.initialize(getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
+
+
 
         //  アンケート一覧を取得
         questions = new ArrayList<>();
+
+        NCMBQuery query = new NCMBQuery("Questions");
+        query.addOrderByDescending("createDate");
+        query.setLimit(3);
+        query.findInBackground(new FindCallback() {
+            @Override
+            public void done(List list, NCMBException e) {
+                for(int i = 0; i < list.size(); i++){
+                    questions.add(new NCMBQuestion((NCMBObject) list.get(i)));
+                }
+            }
+        });
+
+/*
         questions.add(new NCMBQuestion("好きな食べ物は？"));
         questions.add(new NCMBQuestion("好きなお菓子は？"));
         questions.add(new NCMBQuestion("好きな芸能人は？"));
         questions.add(new NCMBQuestion("好きな〇×は？"));
+*/
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
