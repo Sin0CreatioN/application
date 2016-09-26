@@ -43,7 +43,6 @@ public class FindingActivity extends AppCompatActivity{
 
         //  アンケート一覧を取得
         questions = new ArrayList<>();
-
         NCMBQuery query = new NCMBQuery("Questions");
         query.addOrderByDescending("createDate");
         query.setLimit(3);
