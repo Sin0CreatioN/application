@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="options_template_think">
+        <item>本当にそう思う</item>
+        <item>そう思う</item>
+        <item>そう思わない</item>
+        <item>全く思わない</item>
+    </string-array>
+
+    <string-array name="options_template_freq">
+        <item>週1回</item>
+        <item>月1回</item>
+        <item>年1回</item>
+        <item>それ以上</item>
+    </string-array>
+
+    <string-array name="options_template_any">
+        <item>◎</item>
+        <item>○</item>
+        <item>△</item>
+        <item>×</item>
+    </string-array>
+
+
+
+</resources>
