@@ -82,6 +82,15 @@ public class CreatingOptionallyFragment extends Fragment {
      */
     private class MyAdapter extends RecyclerView.Adapter<MaterialCardSingleRadioWithTextAndIconViewHolder> {
 
+        private static final int VIEW_TYPE_TEXT = 1;
+        private static final int VIEW_TYPE_ADD = 2;
+        private static final int VIEW_TYPE_OPEN_TEMPLATE = 3;
+
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
+        }
+
         private ArrayList<Object> mData;
 
         public MyAdapter() {
