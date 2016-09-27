@@ -1,4 +1,4 @@
-package tsmcomp.question.ui.activity;
+﻿package tsmcomp.question.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,7 +44,7 @@ public class FindingActivity extends AppCompatActivity{
         questions = new ArrayList<>();
 
         NCMBQuery query = new NCMBQuery("Questions");
-        query.addOrderByDescending("createDate");
+        query.addOrderByDescending("expiration");
         query.setLimit(3);
         query.findInBackground(new FindCallback() {
             @Override
