@@ -139,15 +139,20 @@ public class CreatingOptionallyFragment extends Fragment {
                 case VIEW_TYPE_ADD:
                     MaterialCardSingleRadioWithTextAndIconViewHolder holder2 =
                             (MaterialCardSingleRadioWithTextAndIconViewHolder) holder;
-                    holder2.mPrimaryTextView.setText("選択肢を追加");
+                    holder2.mPrimaryTextView.setText(Html.fromHtml("<u>選択肢を追加</u>"));
                     holder2.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             addOption();
                         }
                     });
+                    holder2.mRadioButton.setVisibility(View.GONE);
                     break;
                 case VIEW_TYPE_OPEN_TEMPLATE:
+                    MaterialCardSingleRadioWithTextAndIconViewHolder holder3 =
+                            (MaterialCardSingleRadioWithTextAndIconViewHolder) holder;
+                    holder3.itemView.setVisibility(View.GONE);  //  この機能は封印しておく
+
                     break;
 
 
