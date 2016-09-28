@@ -9,6 +9,7 @@ import android.view.View;
 import com.nifty.cloud.mb.core.NCMBObject;
 
 import tsmcomp.question.R;
+import tsmcomp.question.common.util.FallExecutor;
 import tsmcomp.question.model.NCMBQuestion;
 
 public class MenuActivity extends AppCompatActivity {
@@ -87,6 +88,55 @@ public class MenuActivity extends AppCompatActivity {
                 .show();
     }
 
+
+    private void test(){
+        FallExecutor.Task task = new FallExecutor.Task() {
+            @Override
+            public boolean isFinished() {
+                //  終わったかどうか判断する基準を書く
+                //  doneが呼ばれたタイミング？
+                return false;
+            }
+
+            @Override
+            public void onStart() {
+                //  スタート時の処理を書く
+                //  データベースからフェッチを始める
+            }
+
+            @Override
+            public void onCanceled() {
+                //  キャンセルされたときの処理を書く
+
+            }
+        };
+
+        FallExecutor.Task task2 = new FallExecutor.Task() {
+            @Override
+            public boolean isFinished() {
+                //  終わったかどうか判断する基準を書く
+                //  doneが呼ばれたタイミング？
+                return false;
+            }
+
+            @Override
+            public void onStart() {
+                //  スタート時の処理を書く
+                //  データベースからフェッチを始める
+            }
+
+            @Override
+            public void onCanceled() {
+                //  キャンセルされたときの処理を書く
+
+            }
+        };
+
+
+
+    }
+
+    final class FetchQuestionsCountTask
 
 
 

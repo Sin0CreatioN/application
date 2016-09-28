@@ -1,6 +1,5 @@
 package tsmcomp.question.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tsmcomp.question.R;
-import tsmcomp.question.common.MaterialCardAvatarWithTextViewHolder;
+import tsmcomp.question.common.viewholder.MaterialCardAvatarWithTextViewHolder;
 import tsmcomp.question.model.NCMBQuestion;
 
 /**

@@ -1,36 +1,22 @@
 package tsmcomp.question.ui.fragment;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import tsmcomp.question.R;
-import tsmcomp.question.common.MaterialCardAvatarWithTextViewHolder;
-import tsmcomp.question.common.MaterialCardDenseAvatarWithTextAndIconViewHolder;
-import tsmcomp.question.common.MaterialCardRadioWithTextAndIconViewHolder;
-import tsmcomp.question.common.MaterialCardSingleRadioWithEditAndIconViewHolder;
-import tsmcomp.question.common.MaterialCardSingleRadioWithTextAndIconViewHolder;
-import tsmcomp.question.model.NCMBQuestion;
+import tsmcomp.question.common.viewholder.MaterialCardAvatarWithTextViewHolder;
+import tsmcomp.question.common.viewholder.MaterialCardSingleRadioWithEditAndIconViewHolder;
+import tsmcomp.question.common.viewholder.MaterialCardSingleRadioWithTextAndIconViewHolder;
 import tsmcomp.question.ui.activity.CreatingActivity;
 
 /**
