@@ -39,12 +39,12 @@ public class FindingActivity extends AppCompatActivity{
 
         NCMB.initialize(getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
-
         //  アンケート一覧を取得
         questions = new ArrayList<>();
         NCMBQuery query = new NCMBQuery("Questions");
         query.addOrderByDescending("createDate");
         query.setLimit(3);
+
         query.findInBackground(new FindCallback() {
             @Override
             public void done(List list, NCMBException e) {
