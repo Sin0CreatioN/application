@@ -29,6 +29,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:gridlayout-v7:23.4.0'
+
+
+    //  ライセンスチェック必須
+    compile 'com.github.rey5137:material:1.2.4'
     compile 'com.balysv:material-ripple:1.0.2'
-    compile "com.andkulikov:transitionseverywhere:1.6.9"
+    //compile "com.andkulikov:transitionseverywhere:1.6.9"
 }

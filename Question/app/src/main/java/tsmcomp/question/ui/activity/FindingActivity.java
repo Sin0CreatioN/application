@@ -15,6 +15,7 @@ import com.nifty.cloud.mb.core.NCMB;
 import com.nifty.cloud.mb.core.NCMBException;
 import com.nifty.cloud.mb.core.NCMBObject;
 import com.nifty.cloud.mb.core.NCMBQuery;
+import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,6 @@ public class FindingActivity extends AppCompatActivity{
         NCMB.initialize(getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
 
-
-
         //  アンケート一覧を取得
         questions = new ArrayList<>();
         NCMBQuery query = new NCMBQuery("Questions");
@@ -52,10 +51,14 @@ public class FindingActivity extends AppCompatActivity{
                 for(int i = 0; i < list.size(); i++){
                     questions.add(new NCMBQuestion((NCMBObject) list.get(i)));
                 }
+                //  結果を貼る
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                 final MyAdapter myAdapter = new MyAdapter();
                 recyclerView.setLayoutManager(new LinearLayoutManager(FindingActivity.this));
                 recyclerView.setAdapter(myAdapter);
+                //  Circularを消す
+                final ProgressView progressView = (ProgressView) findViewById(R.id.progressView);
+                progressView.setVisibility(View.GONE);
             }
         });
 
@@ -71,6 +74,7 @@ public class FindingActivity extends AppCompatActivity{
 
 
     }
+
 
 
     /**
