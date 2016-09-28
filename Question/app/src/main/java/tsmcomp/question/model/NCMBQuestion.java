@@ -6,6 +6,7 @@ import com.nifty.cloud.mb.core.NCMBObject;
 import com.nifty.cloud.mb.core.NCMBQuery;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +30,7 @@ public class NCMBQuestion implements Serializable{
      * @param obj
      */
     public NCMBQuestion(NCMBObject obj){
-        id = obj.getInt("objectId ");
+        id = obj.getInt("objectId");
         title = obj.getString("title");
 
         options = new ArrayList<NCMBOption>();
@@ -45,6 +46,9 @@ public class NCMBQuestion implements Serializable{
     }
 
 
+    public NCMBQuestion(){
+
+    }
 
 
     /**
@@ -76,9 +80,12 @@ public class NCMBQuestion implements Serializable{
         return options;
     }
 
+    public void setTitle(String title){ this.title = title; }
     public String getTitle(){
         return title;
     }
+    public void setOptions(ArrayList<NCMBOption> options){ this.options = options; }
+
 
     /**
      * QuestionTitleを返すようにしておく

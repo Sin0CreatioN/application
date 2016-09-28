@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.balysv.materialripple.MaterialRippleLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="72dp">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RadioButton
             android:id="@+id/radioButton"
@@ -16,11 +21,20 @@
             android:text="primary"
             android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="72dp"
             android:layout_marginRight="72dp"/>
 
+        <TextView
+            android:id="@+id/secondaryText"
+            android:text="secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="72dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="72dp"/>
 
         <ImageView
             android:layout_width="24dp"
@@ -29,4 +43,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="16dp"
             android:layout_centerVertical="true"/>
-</RelativeLayout>
+
+
+
+    </RelativeLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

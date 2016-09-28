@@ -17,7 +17,8 @@ public class CreatingConfirmFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View v = View.inflate(getContext(), R.layout.fragment_creating_confirm, null);
+        final View v = View.inflate(getContext(), R.layout.fragment_creating_confirm, null);
+        final CreatingActivity creatingActivity = (CreatingActivity)getActivity();
 
         //  TODO:リスナーで返す形に変更する
         //  TODO:バックボタンをつける
@@ -26,9 +27,11 @@ public class CreatingConfirmFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((CreatingActivity)getActivity()).goToTheNextPage();
+                creatingActivity.goToTheNextPage();
             }
         });
+
+
 
         return v;
     }
