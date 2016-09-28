@@ -1,4 +1,4 @@
-﻿package tsmcomp.question.ui.activity;
+package tsmcomp.question.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -66,12 +66,7 @@ public class FindingActivity extends AppCompatActivity{
         questions.add(new NCMBQuestion("好きなお菓子は？"));
         questions.add(new NCMBQuestion("好きな芸能人は？"));
         questions.add(new NCMBQuestion("好きな〇×は？"));
-*/
-
-
-
-
-
+        */
     }
 
 
