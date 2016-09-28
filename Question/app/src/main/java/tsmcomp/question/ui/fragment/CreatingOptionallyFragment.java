@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,34 +39,41 @@ import tsmcomp.question.ui.activity.CreatingActivity;
  */
 public class CreatingOptionallyFragment extends Fragment {
 
-    ArrayList<String> options;
     MyAdapter myAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = View.inflate(getContext(), R.layout.fragment_creating_optionally_form, null);
+        final View view = View.inflate(getContext(), R.layout.fragment_creating_optionally_form, null);
+        final Button nextButton = (Button) view.findViewById(R.id.button);
+        final Button skipButton = (Button) view.findViewById(R.id.button2);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        final CreatingActivity creatingActivity = (CreatingActivity) getActivity();
 
-        options = new ArrayList<String>();
-        options.add("abc");
-        options.add("ddd");
-        options.add("ddd");
-
-
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         myAdapter = new MyAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(myAdapter);
 
-
-
-        //  MEXTボタンの処理
-        Button b = (Button) view.findViewById(R.id.button);
-        b.setOnClickListener(new View.OnClickListener() {
+        //  NEXTボタンの処理
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((CreatingActivity)getActivity()).goToTheNextPage();
+                //  作った選択肢をセットする
+                ArrayList<String> options = getOptions(recyclerView);
+                creatingActivity.setQuestionOptions(options);
+                //  次のページへ飛ばす
+                creatingActivity.goToTheNextPage();
             }
         });
+
+        //  SKIPボタンの処理
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  特に何もせず次のページへ飛ばす
+                creatingActivity.goToTheNextPage();
+            }
+        });
+
 
 
         return view;
@@ -76,6 +84,20 @@ public class CreatingOptionallyFragment extends Fragment {
         super.onStart();
     }
 
+
+
+    /**
+     *  RecyclerViewから選択肢を取得する
+     */
+    private ArrayList<String> getOptions(RecyclerView recyclerView){
+        ArrayList<String> options = new ArrayList<>();
+        for(int i=0; i<recyclerView.getLayoutManager().getItemCount(); i++) {
+            View v = recyclerView.getLayoutManager().findViewByPosition(i);
+            String optionTitle = ((EditText)v.findViewById(R.id.editText)).getText().toString();
+            options.add(optionTitle);
+        }
+        return options;
+    }
 
 
     /**
@@ -178,10 +200,10 @@ public class CreatingOptionallyFragment extends Fragment {
          * 選択肢を削除する
          */
         private void removeOption(int index){
+            //  削除が終わる前に削除するとバグるような気がする
             viewTypes.remove(index);
             notifyItemRemoved(index);
         }
-
 
     }
 

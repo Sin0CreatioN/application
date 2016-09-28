@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import tsmcomp.question.R;
+import tsmcomp.question.model.NCMBQuestion;
 import tsmcomp.question.ui.fragment.CreatingConfirmFragment;
 import tsmcomp.question.ui.fragment.CreatingOptionallyFragment;
 import tsmcomp.question.ui.fragment.CreatingTitleFragment;
@@ -26,8 +29,7 @@ public class CreatingActivity extends AppCompatActivity{
 
     ViewPager mViewPager;
     int mCurrentPageNumber;
-
-
+    NCMBQuestion mQuestion;
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -39,8 +41,13 @@ public class CreatingActivity extends AppCompatActivity{
         mCurrentPageNumber = 0;
         setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
 
+        mQuestion = new NCMBQuestion();
     }
 
+    /**
+     * 次のページへ遷移する処理
+     * 次のページがない場合はTOPへ戻る
+     */
     public void goToTheNextPage(){
         if( MAX_PAGE-1 <= mCurrentPageNumber ){
             //  現在のページが最大数に到達したら
@@ -53,6 +60,36 @@ public class CreatingActivity extends AppCompatActivity{
         mCurrentPageNumber++;
         mViewPager.setCurrentItem(mCurrentPageNumber);
         setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
+    }
+
+
+    /**
+     * アンケを投稿する処理
+     */
+    private void post(){
+
+    }
+
+    /**
+     * アンケのタイトルをセットする
+     */
+    public void setQuestionTitle(String title){
+        mQuestion.setTitle(title);
+    }
+
+    /**
+     * 選択肢をセットする
+     */
+    public void setQuestionOptions(ArrayList<String> options){
+
+    }
+
+
+    /**
+     * アンケの整合性チェック
+     */
+    private boolean isQuestionComplete(){
+        return false;
     }
 
 
