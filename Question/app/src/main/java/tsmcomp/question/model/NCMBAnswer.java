@@ -1,16 +1,31 @@
 package tsmcomp.question.model;
 
+import com.nifty.cloud.mb.core.NCMB;
+import com.nifty.cloud.mb.core.NCMBObject;
+
 /**
  * 回答
  */
 public class NCMBAnswer {
+    String text;
+    String name;
+
+    public NCMBAnswer(NCMBObject obj){
+        text = obj.getString("text");
+        name = obj.getString("user_name");
+    }
+
+    public NCMBAnswer(String text, String name){
+        this.text = text;
+        this.name = name;
+    }
 
     public String getUserName(){
-        return "てすとゆーざ1";
+        return this.name;
     }
 
     public String getAnswerText(){
-        return "鬼ごっことかどうでしょう？鬼ごっことかどうでしょう？";
+        return this.text;
     }
 
 }

@@ -3,7 +3,6 @@ package tsmcomp.question.model;
 import android.support.annotation.Nullable;
 
 import com.nifty.cloud.mb.core.NCMBObject;
-import com.nifty.cloud.mb.core.NCMBQuery;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -87,6 +86,9 @@ public class NCMBQuestion implements Serializable{
     public void setOptions(ArrayList<NCMBOption> options){ this.options = options; }
 
 
+    public int getId(){
+        return this.id;
+    }
     /**
      * QuestionTitleを返すようにしておく
      * @return
