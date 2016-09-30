@@ -16,6 +16,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_CREATING_ACTIVITY = 1;
     private static final int REQUEST_CODE_TODAY_QUESTION = 2;
 
+    public static final int RESULT_CODE_NO_INTERNET_CONNECTION =10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,17 @@ public class MenuActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setPositiveButton("OK", null)
+                .show();
+    }
+
+    /**
+     * 失敗した場合のダイアログを表示する
+     */
+    private void openFailedDialog(String title){
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setPositiveButton("OK", null)
+                .setNegativeButton("Retry", null)
                 .show();
     }
 
