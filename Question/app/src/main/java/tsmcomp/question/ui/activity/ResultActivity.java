@@ -44,6 +44,7 @@ public class ResultActivity extends AppCompatActivity{
         //  回答リストを作成
 
         NCMBQuery query = new NCMBQuery("Answer");
+        //QuestionIDは仮のIDです
         query.whereEqualTo("question_id", "5lyaMAAJjmYP6AdX");
         query.findInBackground(new FindCallback() {
             @Override

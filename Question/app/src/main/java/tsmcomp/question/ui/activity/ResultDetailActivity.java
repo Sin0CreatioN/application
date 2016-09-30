@@ -11,9 +11,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nifty.cloud.mb.core.FindCallback;
+import com.nifty.cloud.mb.core.NCMB;
+import com.nifty.cloud.mb.core.NCMBException;
+import com.nifty.cloud.mb.core.NCMBObject;
+import com.nifty.cloud.mb.core.NCMBQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
 import tsmcomp.question.model.NCMBAnswer;
 
@@ -27,19 +34,29 @@ public class ResultDetailActivity extends AppCompatActivity{
         super.onCreate(bundle);
         setContentView(R.layout.activity_result_detail);
 
-        ListView listview = (ListView) findViewById(R.id.listView);
+        NCMB.initialize(getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
         //  TODO:データベースからデータを引っ張るのと
         //  TODO:リアルタイムで解答があった場合更新する
         //  該当の回答を取得
         //  回答リストを作成
-        ArrayList<NCMBAnswer> answers = new ArrayList<>();
-        answers.add(new NCMBAnswer());
-        answers.add(new NCMBAnswer());
-        answers.add(new NCMBAnswer());
 
-        MyAdapter adapter = new MyAdapter(this, android.R.layout.simple_list_item_1, answers);
-        listview.setAdapter(adapter);
+        NCMBQuery query = new NCMBQuery("Answer");
+        //QuestionIDは仮のIDです
+        query.whereEqualTo("question_id", "5lyaMAAJjmYP6AdX");
+        query.findInBackground(new FindCallback() {
+            @Override
+            public void done(List list, NCMBException e) {
+                ArrayList<NCMBAnswer> answers = new ArrayList<>();
+                for(int i = 0; i < list.size(); i++){
+                    answers.add(new NCMBAnswer((NCMBObject) list.get(i)));
+                }
+
+                ListView listview = (ListView) findViewById(R.id.listView);
+                MyAdapter adapter = new MyAdapter(ResultDetailActivity.this, android.R.layout.simple_list_item_1, answers);
+                listview.setAdapter(adapter);
+            }
+        });
     }
 
     private class MyAdapter extends ArrayAdapter<NCMBAnswer> {
