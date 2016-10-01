@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.nifty.cloud.mb.core.CountCallback;
+import com.nifty.cloud.mb.core.NCMBException;
 import com.nifty.cloud.mb.core.NCMBObject;
+import com.nifty.cloud.mb.core.NCMBQuery;
 
 import tsmcomp.question.R;
 import tsmcomp.question.answer.QuestionListFragment;
@@ -22,47 +25,56 @@ import tsmcomp.question.ui.fragment.DetailOptionallyFragment;
  */
 public class DetailActivity extends AppCompatActivity{
 
+
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.activity_detail);
 
-
-        Fragment fragment = null;
-
         /*
-          ここではじめてNCMBObjectをNCMBQuestionに変換す
-         */
+        ここではじめてNCMBObjectをNCMBQuestionに変換す
+        */
         NCMBQuestion ncmb = (NCMBQuestion) getIntent().getExtras().getSerializable("obj");
 
+        NCMBQuery query = new NCMBQuery("Option");
+        query.whereEqualTo("question_id", ncmb.getId());
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int i, NCMBException e) {
 
-        /*
-         押された質問が自由形式なのか、選択形式なのかで
-         切り替えるフラグメントを指定する
-        */
+                Fragment fragment = null;
 
-        if( !ncmb.hasOption() ){
-            fragment = new DetailFreelyFragment(new DetailFreelyFragment.OnClickButtonListener() {
-                @Override
-                public void onClickSubmitButton(NCMBQuestion question, String answer) {
-                    onClickSubmitButtonInFreeFormFragment(question, answer);
+                /*
+                押された質問が自由形式なのか、選択形式なのかで
+                切り替えるフラグメントを指定する
+                */
+
+                if( i == 0 ){
+                    fragment = new DetailFreelyFragment(new DetailFreelyFragment.OnClickButtonListener() {
+                        @Override
+                        public void onClickSubmitButton(NCMBQuestion question, String answer) {
+                            onClickSubmitButtonInFreeFormFragment(question, answer);
+                        }
+                    });
+                }else{
+                    fragment = new DetailOptionallyFragment(new DetailOptionallyFragment.OnClickButtonListener() {
+                        @Override
+                        public void onClickSubmitButton(NCMBQuestion question, String answer) {
+                            onClickSubmitButtonInOptionalFormFragment(question, answer);
+                        }
+                    });
                 }
-            });
-        }else{
-            fragment = new DetailOptionallyFragment(new DetailOptionallyFragment.OnClickButtonListener() {
-                @Override
-                public void onClickSubmitButton(NCMBQuestion question, String answer) {
-                    onClickSubmitButtonInOptionalFormFragment(question, answer);
-                }
-            });
-        }
 
-        //  bundle経由で渡す場合は
-        //  Serializableインターフェースを実装したSerializedNCMBObjectを使うか
-        //  Stringで渡して各フラグメントでDBに接続して取ってくるかのどちらか
-        fragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment, "form")
-                .commit();
+                //  bundle経由で渡す場合は
+                //  Serializableインターフェースを実装したSerializedNCMBObjectを使うか
+                //  Stringで渡して各フラグメントでDBに接続して取ってくるかのどちらか
+                fragment.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment, "form")
+                        .commit();
+            }
+        });
+
+
 
 
     }
