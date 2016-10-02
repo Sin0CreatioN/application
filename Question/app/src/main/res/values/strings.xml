@@ -22,7 +22,11 @@
     <string name="menu_fourth_item">結果を見る</string>
     <string name="menu_fifth_item">設定</string>
 
-    <!-- 回答 -->
+    <!-- 回答を書く -->
+    <string name="create_header">アンケを書く</string>
+    <string name="create_guide_1">アンケのタイトルを入力してください</string>
+    <string name="create_guide_2">回答用の選択肢を追加してください</string>
+    <string name="add_option_button"><u>選択肢を追加</u></string>
 
     <!-- for creating -->
     <string name="add_option"><u>選択肢を追加</u></string>

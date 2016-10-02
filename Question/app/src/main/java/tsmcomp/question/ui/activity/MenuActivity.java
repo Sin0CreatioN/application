@@ -87,8 +87,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * 画面のボタンが押されたときに呼ばれる
      * @param v

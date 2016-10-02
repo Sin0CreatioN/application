@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import tsmcomp.question.R;
+import tsmcomp.question.Util;
 import tsmcomp.question.common.viewholder.MaterialCardAvatarWithTextViewHolder;
 import tsmcomp.question.common.viewholder.MaterialCardSingleRadioWithEditAndIconViewHolder;
 import tsmcomp.question.common.viewholder.MaterialCardSingleRadioWithTextAndIconViewHolder;
@@ -26,25 +28,26 @@ import tsmcomp.question.ui.activity.CreatingActivity;
 public class CreatingOptionallyFragment extends Fragment {
 
     MyAdapter myAdapter;
+    RecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         final View view = View.inflate(getContext(), R.layout.fragment_creating_optionally_form, null);
         final Button nextButton = (Button) view.findViewById(R.id.button);
         final Button skipButton = (Button) view.findViewById(R.id.button2);
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         final CreatingActivity creatingActivity = (CreatingActivity) getActivity();
 
         myAdapter = new MyAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(myAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(myAdapter);
 
         //  NEXTボタンの処理
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  作った選択肢をセットする
-                ArrayList<String> options = getOptions(recyclerView);
+                ArrayList<String> options = getOptions(mRecyclerView);
                 creatingActivity.setQuestionOptions(options);
                 //  次のページへ飛ばす
                 creatingActivity.goToTheNextPage();
@@ -130,30 +133,24 @@ public class CreatingOptionallyFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             switch(holder.getItemViewType()){
                 case VIEW_TYPE_TEXT:
                     //Log.d("TEST",holder.getClass().toString());
                     MaterialCardSingleRadioWithEditAndIconViewHolder holder1 =
                             (MaterialCardSingleRadioWithEditAndIconViewHolder) holder;
                     holder1.mIconImageView.setImageResource(android.R.drawable.ic_menu_delete);
-                    holder1.mIconImageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    holder1.mIconImageView.setOnClickListener(view->{
+                            //Util.hideKeyboard(getContext(), getParentFragment().getView());
+                            mRecyclerView.requestFocus();
                             removeOption(position);
-                        }
                     });
                     break;
                 case VIEW_TYPE_ADD:
                     MaterialCardSingleRadioWithTextAndIconViewHolder holder2 =
                             (MaterialCardSingleRadioWithTextAndIconViewHolder) holder;
-                    holder2.mPrimaryTextView.setText(Html.fromHtml("<u>選択肢を追加</u>"));
-                    holder2.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            addOption();
-                        }
-                    });
+                    holder2.mPrimaryTextView.setText(R.string.add_option_button);
+                    holder2.itemView.setOnClickListener(v->addOption());
                     holder2.mRadioButton.setVisibility(View.GONE);
                     break;
                 case VIEW_TYPE_OPEN_TEMPLATE:
@@ -189,6 +186,7 @@ public class CreatingOptionallyFragment extends Fragment {
             //  削除が終わる前に削除するとバグるような気がする
             viewTypes.remove(index);
             notifyItemRemoved(index);
+            notifyItemRangeChanged(index, viewTypes.size());
         }
 
     }

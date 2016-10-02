@@ -39,7 +39,7 @@ public class CreatingActivity extends AppCompatActivity{
         mViewPager.setAdapter(new MyFragmentAdapter(getSupportFragmentManager()));
 
         mCurrentPageNumber = 0;
-        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
+        updateActionBarTitle();
 
         mQuestion = new NCMBQuestion();
     }
@@ -59,7 +59,7 @@ public class CreatingActivity extends AppCompatActivity{
         }
         mCurrentPageNumber++;
         mViewPager.setCurrentItem(mCurrentPageNumber);
-        setTitle("アンケを書く("+(mCurrentPageNumber+1)+"/" + MAX_PAGE + ")");
+        updateActionBarTitle();
     }
 
 
@@ -82,6 +82,14 @@ public class CreatingActivity extends AppCompatActivity{
      */
     public void setQuestionOptions(ArrayList<String> options){
 
+    }
+
+    /**
+     * タイトル更新
+     */
+    private void updateActionBarTitle(){
+        setTitle(String.format("%s(%d/%d)",getResources()
+                .getString(R.string.create_header), mCurrentPageNumber+1, MAX_PAGE));
     }
 
 
