@@ -23,6 +23,7 @@ import rx.functions.FuncN;
 import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
 import tsmcomp.question.common.util.FallExecutor;
+import tsmcomp.question.helper.QueryHelper;
 import tsmcomp.question.helper.RxHelper;
 import tsmcomp.question.model.NCMBQuestion;
 
@@ -40,6 +41,11 @@ public class MenuActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_TODAY_QUESTION = 2;
     public static final int RESULT_CODE_NO_INTERNET_CONNECTION =10;
 
+    public static String APP_TEST_KEY = "65d2a589806e23826cf38553adb9185d3c0f4fd50d94c468c05798bf1ff3ae81";
+    public static String CLIENT_TEST_KEY = "922e08511e3be35d7042c78517f39ead1243e82ed4dec7ebf84a14a3b4ee0cdd";
+
+    private NCMBQuestion mRandomQuestion = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,28 +58,31 @@ public class MenuActivity extends AppCompatActivity {
 
 
     /**
-     * 重要
-     * RXJava+Java8 を使った美しい非同期処理
-     * RXJavaは非同期処理（終わるまで待つ）用ライブラリ
-     * Java8はラムダ式（new Interface(){@Override...}を簡単化するためのもの
+     * ランダムにアンケを1つ取ってきます
+     * @use mRandomQuestion
      */
     private void fetchQuestionRandomly(){
         final Random random = new Random();
-        RxHelper.fetchAvailableQuestionCount()
+        NCMBQuery query1 = QueryHelper.createQueryQuestion();
+        RxHelper.countQuery(query1)
                 .map(count->random.nextInt(count))
                 .subscribe(randomValue->{
+                    Log.d("TAG",randomValue.toString());
                     //  アンケの件数からランダムに番号を決定
                     //  番号を指定しアンケを取得する
                     NCMBQuery query = new NCMBQuery("Questions");
-                    query.setSkip(0);
+                    query.setSkip(randomValue);
                     query.setLimit(1);
                     RxHelper.findQuery(query)
                             .map(result->result.get(0))
                             .subscribeOn(AndroidSchedulers.mainThread())
                             .subscribe(f->{
                                 //  ここで値を吐き出す
-                                Log.d("TAG",f.toString());
+                                Log.d("TAG", f.toString());
+                                mRandomQuestion = new NCMBQuestion(f);
                             });
+                },e->{
+                    e.printStackTrace();
                 });
     }
 
@@ -86,12 +95,12 @@ public class MenuActivity extends AppCompatActivity {
      */
     public void onClickView(View v){
         Intent intent = null;
-        NCMBQuestion ncmb = new NCMBQuestion(createNCMBObject("OptionalQuestion"));
         switch(v.getId()){
             case R.id.menu_first_item:
                 //  今日のアンケ
+                //  TODO:nullチェック
                 intent = new Intent(this, DetailActivity.class);
-                intent.putExtra("obj",ncmb);
+                intent.putExtra("obj",mRandomQuestion);
                 startActivity(intent);
                 break;
             case R.id.menu_second_item:
@@ -158,11 +167,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    private static NCMBObject createNCMBObject(String title){
-        NCMBObject obj = new NCMBObject("question");
-        obj.put("title", title);
-        return obj;
-    }
 
 
 
