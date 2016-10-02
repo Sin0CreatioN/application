@@ -34,9 +34,9 @@ public class ResultDetailActivity extends AppCompatActivity{
         //  該当の回答を取得
         //  回答リストを作成
         ArrayList<NCMBAnswer> answers = new ArrayList<>();
-        answers.add(new NCMBAnswer());
-        answers.add(new NCMBAnswer());
-        answers.add(new NCMBAnswer());
+        //answers.add(new NCMBAnswer(""));
+        //answers.add(new NCMBAnswer());
+        //answers.add(new NCMBAnswer());
 
         MyAdapter adapter = new MyAdapter(this, android.R.layout.simple_list_item_1, answers);
         listview.setAdapter(adapter);

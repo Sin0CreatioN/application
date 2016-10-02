@@ -37,7 +37,6 @@ public class ResultActivity extends AppCompatActivity{
 
         NCMB.initialize(getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
 
-
         //  TODO:データベースからデータを引っ張るのと
         //  TODO:リアルタイムで解答があった場合更新する
         //  該当の回答を取得
