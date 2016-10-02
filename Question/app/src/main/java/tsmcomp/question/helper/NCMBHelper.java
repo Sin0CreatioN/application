@@ -1,4 +1,4 @@
-package tsmcomp.question;
+package tsmcomp.question.helper;
 
 import com.nifty.cloud.mb.core.NCMBObject;
 

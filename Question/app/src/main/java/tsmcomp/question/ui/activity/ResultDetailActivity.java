@@ -40,6 +40,8 @@ public class ResultDetailActivity extends AppCompatActivity{
         //  TODO:リアルタイムで解答があった場合更新する
         //  該当の回答を取得
         //  回答リストを作成
+        ArrayList<NCMBAnswer> answers = new ArrayList<>();
+
 
         NCMBQuery query = new NCMBQuery("Answer");
         //QuestionIDは仮のIDです

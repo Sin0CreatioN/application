@@ -22,6 +22,8 @@
     <string name="menu_fourth_item">結果を見る</string>
     <string name="menu_fifth_item">設定</string>
 
+    <!-- 回答 -->
+
     <!-- for creating -->
     <string name="add_option"><u>選択肢を追加</u></string>
 
