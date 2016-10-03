@@ -50,6 +50,18 @@ public class PreferenceHelper {
         mPref.edit().putString("last_date_of_todays_question_user_answerd", convertSimpleDate(date)).commit();
     }
 
+    /**
+     * 今日のアンケを示すID
+     * @return
+     */
+    public String loadTodaysQuestionId(){
+        return mPref.getString("todays_question_id", null);
+    }
+
+    public void saveTodaysQuestionId(String str){
+        mPref.edit().putString("todays_question_id", str).commit();
+    }
+
 
     private SharedPreferences getSharedPref(){
         return PreferenceManager.getDefaultSharedPreferences(mContext);

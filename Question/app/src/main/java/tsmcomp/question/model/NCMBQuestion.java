@@ -20,6 +20,7 @@ public class NCMBQuestion implements Serializable{
 
     int id;
     String title;
+    String objectId;
     ArrayList<NCMBOption> options;
 
 
@@ -31,6 +32,7 @@ public class NCMBQuestion implements Serializable{
     public NCMBQuestion(NCMBObject obj){
         id = obj.getInt("objectId");
         title = obj.getString("title");
+        objectId = obj.getObjectId();
 
         options = new ArrayList<NCMBOption>();
 
@@ -84,11 +86,10 @@ public class NCMBQuestion implements Serializable{
         return title;
     }
     public void setOptions(ArrayList<NCMBOption> options){ this.options = options; }
-
-
     public int getId(){
         return this.id;
     }
+    public String getObjectId(){ return this.objectId; }
     /**
      * QuestionTitleを返すようにしておく
      * @return

@@ -9,4 +9,11 @@ public class QueryHelper {
 
     public static NCMBQuery createQueryQuestion(){ return new NCMBQuery("Questions");}
 
+    public static NCMBQuery findByObjectId(String objectId){
+        NCMBQuery query = createQueryQuestion();
+        query.whereEqualTo("objectId", objectId);
+        return query;
+    }
+
+
 }

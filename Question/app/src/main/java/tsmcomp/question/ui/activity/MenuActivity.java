@@ -1,5 +1,6 @@
 package tsmcomp.question.ui.activity;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +20,17 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.Exceptions;
+import rx.functions.Func1;
 import rx.functions.FuncN;
 import tsmcomp.question.QuestionActivity;
 import tsmcomp.question.R;
 import tsmcomp.question.common.util.FallExecutor;
+import tsmcomp.question.helper.PreferenceHelper;
 import tsmcomp.question.helper.QueryHelper;
 import tsmcomp.question.helper.RxHelper;
 import tsmcomp.question.model.NCMBQuestion;
+import tsmcomp.question.query.QuestionQueryCreator;
 
 /**
  * TODO：今日のアンケートを取得するタイミングを変更するか否か
@@ -45,15 +50,18 @@ public class MenuActivity extends AppCompatActivity {
     public static String CLIENT_TEST_KEY = "922e08511e3be35d7042c78517f39ead1243e82ed4dec7ebf84a14a3b4ee0cdd";
 
     private NCMBQuestion mRandomQuestion = null;
+    private PreferenceHelper mPreferenceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         NCMB.initialize(this.getApplicationContext(), QuestionActivity.KEY1, QuestionActivity.KEY2);
+        mPreferenceHelper = new PreferenceHelper(this);
 
-        fetchQuestionRandomly();
+        disableTodaysQuestionButtonIfNeed();
+        fetchTodaysQuestionIfNeed();
+
     }
 
 
@@ -62,6 +70,7 @@ public class MenuActivity extends AppCompatActivity {
      * @use mRandomQuestion
      */
     private void fetchQuestionRandomly(){
+
         final Random random = new Random();
         NCMBQuery query1 = QueryHelper.createQueryQuestion();
         RxHelper.countQuery(query1)
@@ -85,6 +94,56 @@ public class MenuActivity extends AppCompatActivity {
                     e.printStackTrace();
                 });
     }
+
+
+    /**
+     * 今日のアンケボタンを無効化する
+     * 事前条件：今日のアンケに既に回答していた場合
+     */
+    private void disableTodaysQuestionButtonIfNeed(){
+        if(didUserAnseredTodaysQuestion()) {
+            View v = findViewById(R.id.menu_first_item);
+            v.setEnabled(false);
+        }
+    }
+
+
+    /**
+     *  今日のアンケを取得する
+     *  事前条件：今日のアンケに回答していない場合
+     */
+    private void fetchTodaysQuestionIfNeed(){
+        if(didUserAnseredTodaysQuestion()) return;
+
+        //  当日中に起動していればIDは取得できているので
+        //  既に取得したIDを用いてqueryを作成
+        Observable.just(mPreferenceHelper.loadTodaysQuestionId())
+                .flatMap(id->(id!=null)?
+                        //  取得できた場合はそのIDを取るようなクエリをセット
+                        Observable.just(QuestionQueryCreator.findByObjectId(id)):
+                        //  できない場合はランダムに選択するクエリをセット
+                        RxHelper.countQuery(QuestionQueryCreator.findByAvailable())
+                                .map(count->QuestionQueryCreator.findAvailableByRandomPick(count))
+                )
+                //  どちらかの方法でqueryを作ったら中身を取ってくる
+                .flatMap(query->RxHelper.findQuery(query))
+                //  取ってこれたら描写してみる
+                .subscribe(res->{
+                    Log.d("TAG", "とってこれた！");
+                },e->{});
+    }
+
+
+    /**
+     * 今日のアンケに回答しているかどうかを確認する
+     */
+    private boolean didUserAnseredTodaysQuestion(){
+        return new Date().compareTo(
+                mPreferenceHelper.loadLastedDateOfTodaysQuestionUserAnswered())==0;
+    }
+
+
+
 
 
     /**
@@ -123,6 +182,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
+
     /**
      * ほかの画面へ遷移したとき結果を返してもらう
      * @param requestCode
@@ -137,6 +197,16 @@ public class MenuActivity extends AppCompatActivity {
                 if( resultCode == RESULT_OK ){
                     //  投稿に成功した場合
                     openSuccessDialog("投稿に成功しました");
+                }
+                break;
+            case REQUEST_CODE_TODAY_QUESTION:
+                if( resultCode == RESULT_OK ){
+                    //  投稿に成功した場合
+                    openSuccessDialog("回答しました");
+                    //  今日の日付を埋め込む
+                    mPreferenceHelper.saveLastDateOfTodaysQuestionUserAnswered(new Date());
+                    //  今日のクエスチョンを向こうに
+                    mPreferenceHelper.saveTodaysQuestionId(null);
                 }
                 break;
         }
