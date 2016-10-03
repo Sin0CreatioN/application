@@ -22,6 +22,7 @@ import tsmcomp.question.ui.fragment.DetailOptionallyFragment;
 /**
  * アンケート詳細画面＆回答画面
  * 今日のアンケまたはアンケを探すから遷移
+ * TODO:開くのに重いのでダイアログを表示しておいてほしい
  */
 public class DetailActivity extends AppCompatActivity{
 
