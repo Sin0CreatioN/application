@@ -1,5 +1,7 @@
 package tsmcomp.question.query;
 
+import android.util.Log;
+
 import com.nifty.cloud.mb.core.NCMBQuery;
 
 import java.util.Random;
@@ -43,6 +45,7 @@ public class QuestionQueryCreator {
         NCMBQuery query = findByAvailable();
         Random random = new Random();
         int rand = random.nextInt(maxCount);
+        Log.d("QuestionQueryCreator", "randomPick="+rand);
         query.setSkip(rand);
         query.setLimit(1);
         return query;

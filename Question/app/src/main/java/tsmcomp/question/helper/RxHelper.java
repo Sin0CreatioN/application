@@ -40,7 +40,7 @@ public class RxHelper {
         return Observable.create(f-> {
             query.countInBackground((i, e) -> {
                 if (e != null) f.onError(e);
-                else if (i == 0) f.onError(new Exception("empty list"));
+                //else if (i == 0) f.onError(new Exception("empty list"));
                 else {
                     f.onNext(i);
                 }

@@ -23,13 +23,8 @@ public class PreferenceHelper {
         mPref = getSharedPref();
     }
 
-    /**
-     * 最終ログイン日を取得
-     * @return
-     */
-    public String getLastedLoginDate(){ return mPref.getString("",null); }
 
-    /**
+    /*
      * 今日のアンケを最後に回答した日を取得
      * @return
      */

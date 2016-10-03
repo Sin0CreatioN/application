@@ -21,6 +21,7 @@
     <string name="menu_third_item">アンケを書く</string>
     <string name="menu_fourth_item">結果を見る</string>
     <string name="menu_fifth_item">設定</string>
+    <string name="menu_dialog_submit_successful">送信成功</string>
 
     <!-- 回答を書く -->
     <string name="create_header">アンケを書く</string>

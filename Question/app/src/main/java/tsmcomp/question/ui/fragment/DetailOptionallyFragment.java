@@ -14,12 +14,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nifty.cloud.mb.core.NCMBObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import tsmcomp.question.R;
+import tsmcomp.question.helper.RxHelper;
 import tsmcomp.question.model.NCMBOption;
 import tsmcomp.question.model.NCMBQuestion;
+import tsmcomp.question.query.OptionQueryCreator;
 
 /**
  * Created by test on 2016/09/19.
@@ -48,12 +52,18 @@ public class DetailOptionallyFragment extends Fragment {
 
         //  解答を取得してくる
         final NCMBQuestion question = (NCMBQuestion) getArguments().getSerializable("obj");
-        final ArrayList<NCMBOption> options = question.getOptions();
+        final ArrayList<NCMBOption> options = new ArrayList<>();
+        RxHelper.findQuery(OptionQueryCreator.findByQuestionId(question.getObjectId()))
+                .subscribe(list->{
+                    for(NCMBObject tmp : list) options.add(new NCMBOption(tmp));
+                    //  viewに配置していく
+                    radioGroup = new RadioGroup(getActivity());
+                    listView.setAdapter(new OptionArrayAdapter(getContext(),android.R.layout.simple_list_item_1,options));
+                    textView.setText(question.getTitle());
+                },e->{});
 
-        //  viewに配置していく
-        radioGroup = new RadioGroup(getActivity());
-        listView.setAdapter(new OptionArrayAdapter(getContext(),android.R.layout.simple_list_item_1,options));
-        textView.setText(question.getTitle());
+
+
 
         //  現在選択されているテキストをActivityに返す
         button.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +80,8 @@ public class DetailOptionallyFragment extends Fragment {
 
         return v;
     }
+
+
 
 
     public interface OnClickButtonListener {

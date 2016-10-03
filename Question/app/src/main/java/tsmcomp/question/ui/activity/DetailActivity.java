@@ -2,20 +2,16 @@ package tsmcomp.question.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.nifty.cloud.mb.core.CountCallback;
-import com.nifty.cloud.mb.core.NCMBException;
-import com.nifty.cloud.mb.core.NCMBObject;
-import com.nifty.cloud.mb.core.NCMBQuery;
 
 import tsmcomp.question.R;
-import tsmcomp.question.answer.QuestionListFragment;
+import tsmcomp.question.helper.RxHelper;
 import tsmcomp.question.model.NCMBQuestion;
+import tsmcomp.question.query.OptionQueryCreator;
 import tsmcomp.question.ui.fragment.DetailFreelyFragment;
 import tsmcomp.question.ui.fragment.DetailOptionallyFragment;
 
@@ -31,52 +27,25 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(bundle);
         setContentView(R.layout.activity_detail);
 
-        /*
-        ここではじめてNCMBObjectをNCMBQuestionに変換す
-        */
-        NCMBQuestion ncmb = (NCMBQuestion) getIntent().getExtras().getSerializable("obj");
+        //  ここではじめてNCMBObjectをNCMBQuestionに変換する
+        NCMBQuestion ncmbQuestion = (NCMBQuestion) getIntent().getExtras().getSerializable("obj");
 
-        NCMBQuery query = new NCMBQuery("Option");
-        query.whereEqualTo("question_id", ncmb.getId());
-        query.countInBackground(new CountCallback() {
-            @Override
-            public void done(int i, NCMBException e) {
-
-                Fragment fragment = null;
-
-                /*
-                押された質問が自由形式なのか、選択形式なのかで
-                切り替えるフラグメントを指定する
-                */
-
-                if( i == 0 ){
-                    fragment = new DetailFreelyFragment(new DetailFreelyFragment.OnClickButtonListener() {
-                        @Override
-                        public void onClickSubmitButton(NCMBQuestion question, String answer) {
-                            onClickSubmitButtonInFreeFormFragment(question, answer);
-                        }
-                    });
-                }else{
-                    fragment = new DetailOptionallyFragment(new DetailOptionallyFragment.OnClickButtonListener() {
-                        @Override
-                        public void onClickSubmitButton(NCMBQuestion question, String answer) {
-                            onClickSubmitButtonInOptionalFormFragment(question, answer);
-                        }
-                    });
-                }
-
-                //  bundle経由で渡す場合は
-                //  Serializableインターフェースを実装したSerializedNCMBObjectを使うか
-                //  Stringで渡して各フラグメントでDBに接続して取ってくるかのどちらか
-                fragment.setArguments(getIntent().getExtras());
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, fragment, "form")
-                        .commit();
-            }
-        });
-
-
-
+        //  バックグラウンドで実行する
+        RxHelper.countQuery(OptionQueryCreator.findByQuestionId(ncmbQuestion.getObjectId()))
+                .map(count->(count==0)?
+                        new DetailFreelyFragment((q,ans)->{onClickSubmitButtonInFreeFormFragment(q, ans);}):
+                        new DetailOptionallyFragment((q,ans)->{onClickSubmitButtonInOptionalFormFragment(q, ans);}))
+                .subscribe(fragment->{
+                        //  bundle経由で渡す場合は
+                        //  Serializableインターフェースを実装したSerializedNCMBObjectを使うか
+                        //  Stringで渡して各フラグメントでDBに接続して取ってくるかのどちらか
+                        fragment.setArguments(getIntent().getExtras());
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, fragment, "form")
+                                .commit();
+                },e->{
+                    e.printStackTrace();
+                });
 
     }
 
@@ -93,10 +62,10 @@ public class DetailActivity extends AppCompatActivity{
         hideKeyboard();
 
         //  ログを出す
-        Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
 
         //  解答送信処理
-
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -108,10 +77,10 @@ public class DetailActivity extends AppCompatActivity{
     private void onClickSubmitButtonInOptionalFormFragment(NCMBQuestion question, String answer){
         hideKeyboard();
 
-        Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "解答が送信されました", Toast.LENGTH_SHORT).show();
 
         //  解答送信処理
-
+        setResult(RESULT_OK);
         finish();
     }
 

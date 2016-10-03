@@ -18,11 +18,8 @@ import java.util.ArrayList;
  */
 public class NCMBQuestion implements Serializable{
 
-    int id;
     String title;
     String objectId;
-    ArrayList<NCMBOption> options;
-
 
     /**
      * Serializableにするためにはプリミティブ型(String,intなど)にしておく必要があるので
@@ -30,11 +27,9 @@ public class NCMBQuestion implements Serializable{
      * @param obj
      */
     public NCMBQuestion(NCMBObject obj){
-        id = obj.getInt("objectId");
         title = obj.getString("title");
-        objectId = obj.getObjectId();
+        objectId = obj.getString("objectId");
 
-        options = new ArrayList<NCMBOption>();
 
     }
 
@@ -52,44 +47,13 @@ public class NCMBQuestion implements Serializable{
     }
 
 
-    /**
-     * 選択回答であるか確認する
-     * @return
-     */
-    public boolean hasOption(){
-        //  一時的な処理なので変更してくれ
-        /*
-        if(title.contains("Normal")) return false;
-        return true;
-        */
-
-        return options.size() != 0;
-    }
-
-    /**
-     * 選択回答を取得する
-     * @return
-     */
-    @Nullable
-    public ArrayList<NCMBOption> getOptions(){
-       //   一時的な処理なので変更してくれ
-        ArrayList<NCMBOption> options = new ArrayList<>();
-        options.add(new NCMBOption("Option1"));
-        options.add(new NCMBOption("Option2"));
-        options.add(new NCMBOption("Option3"));
-        options.add(new NCMBOption("Option4"));
-        return options;
-    }
 
     public void setTitle(String title){ this.title = title; }
     public String getTitle(){
         return title;
     }
-    public void setOptions(ArrayList<NCMBOption> options){ this.options = options; }
-    public int getId(){
-        return this.id;
-    }
     public String getObjectId(){ return this.objectId; }
+
     /**
      * QuestionTitleを返すようにしておく
      * @return

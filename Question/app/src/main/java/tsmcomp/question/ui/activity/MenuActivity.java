@@ -64,45 +64,13 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-
-    /**
-     * ランダムにアンケを1つ取ってきます
-     * @use mRandomQuestion
-     */
-    private void fetchQuestionRandomly(){
-
-        final Random random = new Random();
-        NCMBQuery query1 = QueryHelper.createQueryQuestion();
-        RxHelper.countQuery(query1)
-                .map(count->random.nextInt(count))
-                .subscribe(randomValue->{
-                    Log.d("TAG",randomValue.toString());
-                    //  アンケの件数からランダムに番号を決定
-                    //  番号を指定しアンケを取得する
-                    NCMBQuery query = new NCMBQuery("Questions");
-                    query.setSkip(randomValue);
-                    query.setLimit(1);
-                    RxHelper.findQuery(query)
-                            .map(result->result.get(0))
-                            .subscribeOn(AndroidSchedulers.mainThread())
-                            .subscribe(f->{
-                                //  ここで値を吐き出す
-                                Log.d("TAG", f.toString());
-                                mRandomQuestion = new NCMBQuestion(f);
-                            });
-                },e->{
-                    e.printStackTrace();
-                });
-    }
-
-
     /**
      * 今日のアンケボタンを無効化する
      * 事前条件：今日のアンケに既に回答していた場合
      */
     private void disableTodaysQuestionButtonIfNeed(){
         if(didUserAnseredTodaysQuestion()) {
-            View v = findViewById(R.id.menu_first_item);
+            View v = findViewById(R.id.menu_wrapper_first_item);
             v.setEnabled(false);
         }
     }
@@ -123,13 +91,16 @@ public class MenuActivity extends AppCompatActivity {
                         Observable.just(QuestionQueryCreator.findByObjectId(id)):
                         //  できない場合はランダムに選択するクエリをセット
                         RxHelper.countQuery(QuestionQueryCreator.findByAvailable())
-                                .map(count->QuestionQueryCreator.findAvailableByRandomPick(count))
+                                .map(count->{
+                                    System.out.println(count);
+                                    return QuestionQueryCreator.findAvailableByRandomPick(count);
+                                })
                 )
                 //  どちらかの方法でqueryを作ったら中身を取ってくる
                 .flatMap(query->RxHelper.findQuery(query))
                 //  取ってこれたら描写してみる
                 .subscribe(res->{
-                    Log.d("TAG", "とってこれた！");
+                    mRandomQuestion = new NCMBQuestion(res.get(0));
                 },e->{});
     }
 
@@ -138,6 +109,7 @@ public class MenuActivity extends AppCompatActivity {
      * 今日のアンケに回答しているかどうかを確認する
      */
     private boolean didUserAnseredTodaysQuestion(){
+        //  時間は一回削除しないとだめかも
         return new Date().compareTo(
                 mPreferenceHelper.loadLastedDateOfTodaysQuestionUserAnswered())==0;
     }
@@ -158,7 +130,7 @@ public class MenuActivity extends AppCompatActivity {
                 //  TODO:nullチェック
                 intent = new Intent(this, DetailActivity.class);
                 intent.putExtra("obj",mRandomQuestion);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_TODAY_QUESTION);
                 break;
             case R.id.menu_second_item:
                 //  アンケ一覧画面
@@ -202,11 +174,12 @@ public class MenuActivity extends AppCompatActivity {
             case REQUEST_CODE_TODAY_QUESTION:
                 if( resultCode == RESULT_OK ){
                     //  投稿に成功した場合
-                    openSuccessDialog("回答しました");
+                    openSuccessDialog(R.string.menu_dialog_submit_successful);
                     //  今日の日付を埋め込む
                     mPreferenceHelper.saveLastDateOfTodaysQuestionUserAnswered(new Date());
                     //  今日のクエスチョンを向こうに
                     mPreferenceHelper.saveTodaysQuestionId(null);
+                    disableTodaysQuestionButtonIfNeed();
                 }
                 break;
         }
@@ -219,6 +192,13 @@ public class MenuActivity extends AppCompatActivity {
     private void openSuccessDialog(String title){
         new AlertDialog.Builder(this)
                 .setTitle(title)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
+    private void openSuccessDialog(int id){
+        new AlertDialog.Builder(this)
+                .setTitle(id)
                 .setPositiveButton("OK", null)
                 .show();
     }
